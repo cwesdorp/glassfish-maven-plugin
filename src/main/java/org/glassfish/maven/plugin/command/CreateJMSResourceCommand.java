@@ -36,21 +36,19 @@
 
 package org.glassfish.maven.plugin.command;
 
+import java.util.Arrays;
+import java.util.List;
 import org.glassfish.maven.plugin.Domain;
 import org.glassfish.maven.plugin.GlassfishMojo;
 import org.glassfish.maven.plugin.JmsResource;
-
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * Created by dwhitla at Apr 10, 2007 10:09:52 AM
  *
  * @author <a href="mailto:dave.whitla@ocean.net.au">Dave Whitla</a>
- * @version $Id: CreateJMSResourceCommand.java 0 Apr 10, 2007 10:09:52 AM dwhitla $
  */
 public class CreateJMSResourceCommand extends InteractiveAsadminCommand {
-    
+
     private Domain domain;
     private JmsResource resource;
 

@@ -36,29 +36,30 @@
 
 package org.glassfish.maven.plugin;
 
-import au.net.ocean.maven.plugin.annotation.Mojo;
-import static au.net.ocean.maven.plugin.annotation.Phase.PreIntegrationTest;
-import org.glassfish.maven.plugin.command.DeleteDomainCommand;
-import org.glassfish.maven.plugin.command.StopDomainCommand;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.plugin.logging.Log;
+import org.apache.maven.plugins.annotations.LifecyclePhase;
+import org.apache.maven.plugins.annotations.Mojo;
+import org.glassfish.maven.plugin.command.DeleteDomainCommand;
+import org.glassfish.maven.plugin.command.StopDomainCommand;
 
 /**
- * Create a new domain in a local or remote Glassfish instance
+ * Create a new domain in a local or remote Glassfish instance.
  *
  * @author <a href="mailto:dave.whitla@ocean.net.au">Dave Whitla</a>
- * @version $Id: CreateDomainGlassfishMojo.java 0 Apr 3, 2007 8:23:46 AM dwhitla $
  */
 @Mojo(
-        goal = "create-domain",
-        phase = PreIntegrationTest,
-        description = "Create a new domain in a local or remote Glassfish instance",
+        name = "create-domain",
+        defaultPhase = LifecyclePhase.PRE_INTEGRATION_TEST,
         requiresProject = true
 )
 public class CreateDomainGlassfishMojo extends GlassfishMojo {
 
-    public void doExecute() throws MojoExecutionException, MojoFailureException {
+    @Override
+    public void execute() throws MojoExecutionException, MojoFailureException {
+        postConfig();
+
         ProcessBuilder processBuilder = new ProcessBuilder();
         Log log = getLog();
         if (domain.exists()) {

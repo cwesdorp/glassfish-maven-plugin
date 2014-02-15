@@ -36,13 +36,12 @@
 
 package org.glassfish.maven.plugin;
 
-import au.net.ocean.maven.plugin.annotation.Parameter;
+import org.apache.maven.plugins.annotations.Parameter;
 
 /**
- * Created by dwhitla at Jun 21, 2007 11:24:44 PM
+ * Describe a JMS Connection Factory.
  *
  * @author <a href="mailto:dave.whitla@ocean.net.au">Dave Whitla</a>
- * @version $Id: JmsConnectionFactory.java 0 Jun 21, 2007 11:24:44 PM dwhitla $
  */
 public class ConnectionFactory extends JmsResource {
 
@@ -60,5 +59,5 @@ public class ConnectionFactory extends JmsResource {
     public void setType(Type type) {
         this.type = type;
     }
-    
+
 }

@@ -36,24 +36,21 @@
 
 package org.glassfish.maven.plugin;
 
-import au.net.ocean.maven.plugin.annotation.Parameter;
-import au.net.ocean.maven.plugin.annotation.Required;
+import org.apache.maven.plugins.annotations.Parameter;
 
 /**
- * Created by dwhitla at Apr 3, 2007 8:46:34 PM
+ * Describes a security configuration for a Glassfish domain.
  *
  * @author <a href="mailto:dave.whitla@ocean.net.au">Dave Whitla</a>
- * @version $Id: Auth.java 0 Apr 3, 2007 8:46:34 PM dwhitla $
+ * @author <a href="mailto:chriswesdorp@gmail.com">Chris</a>
  */
 public class Auth {
 
-    @Parameter
-    @Required
+    @Parameter(property = "realm", required = true)
     private Realm realm;
 
     @Parameter
     private MessageSecurityProvider messageSecurityProvider;
-
 
     public Realm getRealm() {
         return realm;

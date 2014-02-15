@@ -36,30 +36,28 @@
 
 package org.glassfish.maven.plugin;
 
-import au.net.ocean.maven.plugin.annotation.Mojo;
-import static au.net.ocean.maven.plugin.annotation.Phase.PostIntegrationTest;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
+import org.apache.maven.plugins.annotations.LifecyclePhase;
+import org.apache.maven.plugins.annotations.Mojo;
 import org.glassfish.maven.plugin.command.StartDomainCommand;
 import org.glassfish.maven.plugin.command.StopDomainCommand;
 import org.glassfish.maven.plugin.command.UndeployCommand;
 
 /**
- * Undeploy JavaEE components which are currently deployed to a domain in a local or remote Glassfish instance
+ * Undeploy JavaEE components which are currently deployed to a domain in a local or remote Glassfish instance.
  *
  * @author <a href="mailto:dave.whitla@ocean.net.au">Dave Whitla</a>
- * @version $Id: UndeployGlassfishMojo.java 0 Apr 2, 2007 7:26:05 PM dwhitla $
  */
-@Mojo(
-        goal = "undeploy",
-        description =
-                "Undeploy JavaEE components which are currently deployed to a domain in a local or remote Glassfish instance",
-        phase = PostIntegrationTest,
-        requiresProject = true
-)
+@Mojo(name = "undeploy",
+        defaultPhase = LifecyclePhase.POST_INTEGRATION_TEST,
+        requiresProject = true)
 public class UndeployGlassfishMojo extends DeploymentGlassfishMojo {
 
-    public void doExecute() throws MojoExecutionException, MojoFailureException {
+    @Override
+    public void execute() throws MojoExecutionException, MojoFailureException {
+        postConfig();
+
         ProcessBuilder processBuilder = new ProcessBuilder();
         if (domain.exists()) {
             boolean started = domain.isStarted();

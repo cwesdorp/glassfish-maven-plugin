@@ -36,27 +36,28 @@
 
 package org.glassfish.maven.plugin;
 
-import au.net.ocean.maven.plugin.annotation.Mojo;
-import static au.net.ocean.maven.plugin.annotation.Phase.PostIntegrationTest;
-import org.glassfish.maven.plugin.command.StopDomainCommand;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
+import org.apache.maven.plugins.annotations.LifecyclePhase;
+import org.apache.maven.plugins.annotations.Mojo;
+import org.glassfish.maven.plugin.command.StopDomainCommand;
 
 /**
  * Stop a domain which is currently running in a local or remote Glassfish instance
  *
  * @author <a href="mailto:dave.whitla@ocean.net.au">Dave Whitla</a>
- * @version $Id: StopGlassfishMojo.java 0 Apr 3, 2007 8:21:54 AM dwhitla $
  */
 @Mojo(
-        goal = "stop-domain",
-        description = "Stop a domain which is currently running in a local or remote Glassfish instance",
-        phase = PostIntegrationTest,
+        name = "stop-domain",
+        defaultPhase = LifecyclePhase.POST_INTEGRATION_TEST,
         requiresProject = true
 )
 public class StopDomainGlassfishMojo extends GlassfishMojo {
-    
-    public void doExecute() throws MojoExecutionException, MojoFailureException {
+
+    @Override
+    public void execute() throws MojoExecutionException, MojoFailureException {
+        postConfig();
+
         if (domain.exists()) {
             new StopDomainCommand(this, domain).execute();
         } else {

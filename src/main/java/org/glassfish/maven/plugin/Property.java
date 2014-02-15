@@ -36,52 +36,49 @@
 
 package org.glassfish.maven.plugin;
 
-import au.net.ocean.maven.plugin.annotation.Required;
-import au.net.ocean.maven.plugin.annotation.Parameter;
+import org.apache.maven.plugins.annotations.Parameter;
 
 /**
- * Created by dwhitla at Apr 9, 2007 3:05:45 PM
+ * Property definition. This is a key-value.
  *
  * @author <a href="mailto:dave.whitla@ocean.net.au">Dave Whitla</a>
- * @version $Id: Property.java 0 Apr 9, 2007 3:05:45 PM dwhitla $
  */
 public class Property {
 
-    @Required
-    @Parameter
+    @Parameter(required = true)
     private String name;
 
-    @Required
-    @Parameter
+    @Parameter(required = true)
     private String value;
 
 
     public Property() {
     }
 
-    public Property(String name, String value) {
-        this.name = name;
-        this.value = value;
+    public Property(String pName, String pValue) {
+        this.name = pName;
+        this.value = pValue;
     }
 
+    @Override
     public String toString() {
         return name + '=' + value;
     }
-
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setName(String pName) {
+        this.name = pName;
     }
 
     public String getValue() {
         return value;
     }
 
-    public void setValue(String value) {
-        this.value = value;
+    public void setValue(String pValue) {
+        this.value = pValue;
     }
+
 }

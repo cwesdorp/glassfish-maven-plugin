@@ -36,6 +36,9 @@
 
 package org.glassfish.maven.plugin;
 
+import java.util.Set;
+import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.maven.plugin.MojoFailureException;
 import org.glassfish.maven.plugin.command.AddResourcesCommand;
 import org.glassfish.maven.plugin.command.CreateAuthRealmCommand;
 import org.glassfish.maven.plugin.command.CreateDomainCommand;
@@ -48,21 +51,15 @@ import org.glassfish.maven.plugin.command.CreateMessageSecurityProviderCommand;
 import org.glassfish.maven.plugin.command.SetCommand;
 import org.glassfish.maven.plugin.command.StartDomainCommand;
 import org.glassfish.maven.plugin.command.StopDomainCommand;
-import org.apache.maven.plugin.MojoExecutionException;
-import org.apache.maven.plugin.MojoFailureException;
-
-import java.util.Set;
 
 /**
- * Created by Dave Whitla on 23/03/2008 at 21:54:07
  *
  * @author <a href="mailto:dave.whitla@ocean.net.au">Dave Whitla</a>
- * @version $Id: CreateDomainMacro.java 0 23/03/2008 21:54:07 dwhitla $
  */
 public class CreateDomainMacro {
-    
-    private GlassfishMojo sharedContext;
-    private Domain domain;
+
+    private final GlassfishMojo sharedContext;
+    private final Domain domain;
 
     public CreateDomainMacro(GlassfishMojo sharedContext, Domain domain) {
         this.sharedContext = sharedContext;
@@ -76,6 +73,7 @@ public class CreateDomainMacro {
         addResources(processBuilder);
         setProperties(processBuilder);
         createAuth(processBuilder);
+
         new StopDomainCommand(sharedContext, domain).execute(processBuilder);
     }
 
@@ -119,7 +117,10 @@ public class CreateDomainMacro {
 
     private void createJMSDestination(ProcessBuilder processBuilder, JmsDestination jmsDestination)
             throws MojoExecutionException, MojoFailureException {
-        new CreateJMSResourceCommand(sharedContext, domain, jmsDestination.getConnectionFactory()).execute(processBuilder);
+        // TODO - check if JMS CF exists ?
+        if (jmsDestination.getConnectionFactory() != null) {
+            new CreateJMSResourceCommand(sharedContext, domain, jmsDestination.getConnectionFactory()).execute(processBuilder);
+        }
         new CreateJMSDestinationCommand(sharedContext, domain, jmsDestination.getDestination()).execute(processBuilder);
         new CreateJMSResourceCommand(sharedContext, domain, jmsDestination).execute(processBuilder);
     }
@@ -148,4 +149,5 @@ public class CreateDomainMacro {
             new CreateMessageSecurityProviderCommand(sharedContext, domain, securityProvider).execute(processBuilder);
         }
     }
+
 }

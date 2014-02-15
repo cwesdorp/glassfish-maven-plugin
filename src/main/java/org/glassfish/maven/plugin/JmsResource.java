@@ -36,21 +36,17 @@
 
 package org.glassfish.maven.plugin;
 
-import au.net.ocean.maven.plugin.annotation.Parameter;
-import au.net.ocean.maven.plugin.annotation.Required;
-
 import java.util.HashSet;
 import java.util.Set;
+import org.apache.maven.plugins.annotations.Parameter;
 
 /**
- * Created by dwhitla at Jun 21, 2007 10:12:37 PM
  *
- * @author <a href="mailto:dave.whitla@ocean.net.au">Dave Whitla</a>
+ * @author chris
  */
 public abstract class JmsResource implements Resource {
 
-    @Required
-    @Parameter
+    @Parameter(required = true)
     private String jndiName;
 
     @Parameter

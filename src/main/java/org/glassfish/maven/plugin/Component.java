@@ -36,24 +36,22 @@
 
 package org.glassfish.maven.plugin;
 
-import au.net.ocean.maven.plugin.annotation.Parameter;
-import au.net.ocean.maven.plugin.annotation.Required;
-
 import java.io.File;
+import org.apache.maven.plugins.annotations.Parameter;
+
 
 /**
- * Created by dwhitla at Apr 5, 2007 2:15:09 PM
+ * Describe a component that will be deployed.
  *
  * @author <a href="mailto:dave.whitla@ocean.net.au">Dave Whitla</a>
- * @version $Id: Component.java 0 Apr 5, 2007 2:15:09 PM dwhitla $
+ * @author <a href="mailto:chriswesdorp@gmail.com">Chris</a>
  */
 public class Component {
 
-    @Parameter(expression = "${project.artifactId}")
+    @Parameter
     private String name;
 
-    @Parameter
-    @Required
+    @Parameter(required = true)
     private File artifact;
 
     public Component() {

@@ -36,74 +36,102 @@
 
 package org.glassfish.maven.plugin;
 
-import au.net.ocean.maven.plugin.MojoConfigurationException;
-import au.net.ocean.maven.plugin.OceanMojo;
-import au.net.ocean.maven.plugin.annotation.Parameter;
-import au.net.ocean.maven.plugin.annotation.Required;
-
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+import org.apache.maven.artifact.factory.ArtifactFactory;
+import org.apache.maven.artifact.repository.ArtifactRepository;
+import org.apache.maven.artifact.resolver.ArtifactResolver;
+import org.apache.maven.plugin.AbstractMojo;
+import org.apache.maven.plugin.MojoFailureException;
+import org.apache.maven.plugins.annotations.Parameter;
 
 
 /**
- * Created by dwhitla at Apr 2, 2007 6:59:36 PM
  *
  * @author <a href="mailto:dave.whitla@ocean.net.au">Dave Whitla</a>
- * @version $Id: GlassFishMojo.java 0 Apr 2, 2007 6:59:36 PM dwhitla $
  */
-public abstract class GlassfishMojo extends OceanMojo {
-    
-    @Parameter(description = "The directory into which domains are deployed. Default value is ${glassfishDirectory}/domains.")
+public abstract class GlassfishMojo extends AbstractMojo {
+
+    @org.apache.maven.plugins.annotations.Component
+    protected ArtifactResolver artifactResolver;
+
+    @Parameter(defaultValue = "${localRepository}", readonly = true)
+    protected ArtifactRepository localRepository;
+
+    @Parameter(defaultValue = "${project.remoteArtifactRepositories}")
+    protected java.util.List<ArtifactRepository> remoteRepositories;
+
+    /**
+     * The directory into which domains are deployed. Default value is ${glassfishDirectory}/domains.
+     */
+    @Parameter
     protected File domainDirectory;
 
-    @Required
-    @Parameter(description = "Container for domain configuration parameters.")
+    /**
+     * Container for domain configuration parameters.
+     */
+    @Parameter(required = true)
     protected Domain domain;
 
-//    @Parameter(description = "Peer domain fixtures for testing a JEE component against other existing remote JEE components " +
-//            "which can be deployed remote domains, created during the automated build.")
-//    protected List<Domain> testing;
+    @org.apache.maven.plugins.annotations.Component
+    private ArtifactFactory artifactFactory;
 
-    @Required
-    @Parameter(description = "The root directory of the Glassfish installation to be used", expression = "${glassfish.home}")
+    /**
+     * The root directory of the Glassfish installation to be used.
+     */
+    @Parameter(required = true)
     private File glassfishDirectory;
 
-    @Parameter(description = "Debug Glassfish output", defaultValue = "false")
+    /**
+     * Debug Glassfish output.
+     */
+    @Parameter(defaultValue = "false")
     private boolean debug;
 
-    @Parameter(description = "Force component deployment", defaultValue = "false")
+    /**
+     * Force component deployment.
+     */
+    @Parameter(defaultValue = "false")
     private boolean force;
 
-    @Parameter(description = "Echo Glassfish asadmin commands", defaultValue = "false")
+    /**
+     * Echo Glassfish asadmin commands.
+     */
+    @Parameter(defaultValue = "false")
     private boolean echo;
 
-    @Parameter(description = "Terse Glassfish output", defaultValue = "true")
+    /**
+     * Terse Glassfish output.
+     */
+    @Parameter(defaultValue = "true")
     private boolean terse = true;
 
-    @Parameter(description = "Automatically create the domain if it does not already exist", defaultValue = "true")
+    /**
+     * Automatically create the domain if it does not already exist.
+     */
+    @Parameter(defaultValue = "true")
     private boolean autoCreate;
 
-    @Parameter(
-            description = "The asadmin user to create for domain administration.",
-            expression = "${glassfish.adminUser}",
-            defaultValue = "${user.name}"
-            )
+    /**
+     * The asadmin user to create for domain administration.
+     */
+    @Parameter(defaultValue = "${user.name}")
     private String user;
 
-    @Parameter(
-            description = "Location of the asadmin style password file (if you do not want to provide the password in your POM)")
+    /**
+     * Location of the asadmin style password file (if you do not want to provide the password in your POM).
+     */
+    @Parameter
     private String passwordFile;
 
-    @Parameter(
-            description = "The admin password to use for this domain " +
-                   "(if you would rather not use an asadmin style password file)",
-            expression = "${glassfish.adminPassword}"
-    )
+    /**
+     * The admin password to use for this domain (if you would rather not use an asadmin style password file).
+     */
+    @Parameter(defaultValue = "${glassfish.adminPassword}")
     private String adminPassword;
 
     protected String getPrefix() {
@@ -190,10 +218,10 @@ public abstract class GlassfishMojo extends OceanMojo {
         this.passwordFile = passwordFile;
     }
 
-    protected void postConfig() throws MojoConfigurationException {
+    protected void postConfig() throws MojoFailureException {
         List<String> configErrors = getConfigErrors();
         if (!configErrors.isEmpty()) {
-            throw new MojoConfigurationException(this, configErrors);
+            throw new MojoFailureException(configErrors.get(0));
         }
         if (adminPassword != null && adminPassword.length() > 0) {
             // create temporary passfile
@@ -203,25 +231,23 @@ public abstract class GlassfishMojo extends OceanMojo {
                 passwordFile = tmpPassFile.getAbsolutePath();
                 PrintWriter fileWriter = new PrintWriter(new FileWriter(tmpPassFile));
                 fileWriter.println("AS_ADMIN_PASSWORD=" + adminPassword);
-                fileWriter.println("AS_ADMIN_USERPASSWORD=" + adminPassword);
-                fileWriter.println("AS_ADMIN_ADMINPASSWORD=" + adminPassword);
-                fileWriter.println("AS_ADMIN_MASTERPASSWORD=" + adminPassword);
+//                fileWriter.println("AS_ADMIN_USERPASSWORD=" + adminPassword);
+//                fileWriter.println("AS_ADMIN_MASTERPASSWORD=" + adminPassword);
                 fileWriter.close();
             } catch (IOException e) {
-                throw new MojoConfigurationException(this,
-                        Arrays.asList("Unable to create temporary asadmin password file in "
-                                + System.getProperty("java.io.tmpdir")));
+                throw new MojoFailureException("Unable to create temporary asadmin password file in "
+                                + System.getProperty("java.io.tmpdir"));
             }
         }
         // todo: this should be left to asadmin to decide
         if (domainDirectory == null) {
-            domainDirectory = new File(glassfishDirectory, "domains");
+            domainDirectory = new File(glassfishDirectory, "glassfish/domains");
         }
-//        for (Domain domain : domains) {
-            if (domain.getDirectory() == null) {
-                domain.setDirectory(domainDirectory);
-            }
-//        }
+
+        if (domain.getDirectory() == null) {
+            domain.setDirectory(domainDirectory);
+        }
+
     }
 
     protected List<String> getConfigErrors() {
@@ -244,7 +270,6 @@ public abstract class GlassfishMojo extends OceanMojo {
         }
         return errors;
     }
-
 
     public boolean isAutoCreate() {
         return autoCreate;

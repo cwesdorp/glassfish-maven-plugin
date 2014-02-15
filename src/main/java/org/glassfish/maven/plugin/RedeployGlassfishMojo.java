@@ -36,26 +36,25 @@
 
 package org.glassfish.maven.plugin;
 
-import au.net.ocean.maven.plugin.annotation.Mojo;
-import org.glassfish.maven.plugin.command.DeployCommand;
-import org.glassfish.maven.plugin.command.UndeployCommand;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
+import org.apache.maven.plugins.annotations.Mojo;
+import org.glassfish.maven.plugin.command.DeployCommand;
+import org.glassfish.maven.plugin.command.UndeployCommand;
 
 /**
  * "Hot" redeploy JavaEE components to a domain in a local or remote Glassfish instance
  *
  * @author <a href="mailto:dave.whitla@ocean.net.au">Dave Whitla</a>
- * @version $Id: RedeployGlassfishMojo.java 0 Apr 3, 2007 8:22:59 AM dwhitla $
  */
-@Mojo(
-        goal = "redeploy",
-        description = "\"Hot\" redeploy JavaEE components to a domain in a local or remote Glassfish instance",
-        requiresProject = true
-)
+@Mojo(name = "redeploy",
+        requiresProject = true)
 public class RedeployGlassfishMojo extends DeploymentGlassfishMojo {
 
-    public void doExecute() throws MojoExecutionException, MojoFailureException {
+    @Override
+    public void execute() throws MojoExecutionException, MojoFailureException {
+        postConfig();
+
         ProcessBuilder processBuilder = new ProcessBuilder();
         for (Component component : getComponents()) {
             new UndeployCommand(this, domain, component).execute(processBuilder);

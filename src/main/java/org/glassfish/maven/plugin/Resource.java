@@ -39,10 +39,8 @@ package org.glassfish.maven.plugin;
 import java.util.Set;
 
 /**
- * Created by dwhitla at Apr 10, 2007 10:14:48 AM
  *
  * @author <a href="mailto:dave.whitla@ocean.net.au">Dave Whitla</a>
- * @version $Id: Resource.java 0 Apr 10, 2007 10:14:48 AM dwhitla $
  */
 public interface Resource {
 

@@ -36,27 +36,27 @@
 
 package org.glassfish.maven.plugin;
 
-import au.net.ocean.maven.plugin.annotation.Mojo;
-import au.net.ocean.maven.plugin.annotation.Phase;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
+import org.apache.maven.plugins.annotations.LifecyclePhase;
+import org.apache.maven.plugins.annotations.Mojo;
 import org.glassfish.maven.plugin.command.DeployCommand;
 
 /**
- * Deploy JavaEE component artifacts to domain in a local or remote Glassfish instance
+ * Deploy JavaEE component artifacts to domain in a local or remote Glassfish instance.
  *
  * @author <a href="mailto:dave.whitla@ocean.net.au">Dave Whitla</a>
- * @version $Id: DeployGlassfishMojo.java 0 Apr 2, 2007 7:16:12 PM dwhitla $
+ * @author <a href="mailto:chriswesdorp@gmail.com">Chris</a>
  */
-@Mojo(
-        goal = "deploy",
-        phase = Phase.PreIntegrationTest,
-        description = "Deploy JavaEE component artifacts to domain in a local or remote Glassfish instance",
-        requiresProject = true
-)
+@Mojo(name = "deploy",
+        defaultPhase = LifecyclePhase.PRE_INTEGRATION_TEST,
+        requiresProject = true)
 public class DeployGlassfishMojo extends DeploymentGlassfishMojo {
 
-    public void doExecute() throws MojoExecutionException, MojoFailureException {
+    @Override
+    public void execute() throws MojoExecutionException, MojoFailureException {
+        postConfig();
+
         ProcessBuilder processBuilder = new ProcessBuilder();
         if (!domain.isStarted()) {
             getLog().info("Domain " + domain.getName() + " isn't started. Starting it for you.");

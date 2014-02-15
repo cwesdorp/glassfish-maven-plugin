@@ -36,24 +36,20 @@
 
 package org.glassfish.maven.plugin;
 
-import au.net.ocean.maven.plugin.annotation.Parameter;
-import au.net.ocean.maven.plugin.annotation.Required;
-
 import java.util.List;
+import org.apache.maven.plugins.annotations.Parameter;
 
 /**
- * Created by dwhitla at Apr 3, 2007 8:24:59 AM
+ * Describe the deployment of artifacts into Glassfish.
  *
  * @author <a href="mailto:dave.whitla@ocean.net.au">Dave Whitla</a>
- * @version $Id: AbstractDeployGlassfishMojo.java 0 Apr 3, 2007 8:24:59 AM dwhitla $
  */
 public abstract class DeploymentGlassfishMojo extends GlassfishMojo {
 
     /**
-     * todo: Default to the pom artifact
+     * The set of components we are publishing.
      */
-    @Required
-    @Parameter(description = "The set of components we are publishing.")
+    @Parameter(required = true)
     protected List<Component> components;
 
 

@@ -37,8 +37,6 @@ Maven Glassfish Plugin
 
   * {{{examples/complete.html}A single example demonstrating the use of all currently available configuration options}}
 
-  * {{{examples/profiles.html}Using Maven profiles to provide alternate maven-glassfish-plugin mojo sequences in the default build, and to enable per-user configurations.}}
-
 
 * Contributors
 

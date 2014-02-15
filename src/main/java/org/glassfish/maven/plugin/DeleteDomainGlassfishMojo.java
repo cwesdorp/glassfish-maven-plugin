@@ -36,28 +36,27 @@
 
 package org.glassfish.maven.plugin;
 
-import au.net.ocean.maven.plugin.annotation.Mojo;
-import au.net.ocean.maven.plugin.annotation.Phase;
-import org.glassfish.maven.plugin.command.DeleteDomainCommand;
-import org.glassfish.maven.plugin.command.StopDomainCommand;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
+import org.apache.maven.plugins.annotations.LifecyclePhase;
+import org.apache.maven.plugins.annotations.Mojo;
+import org.glassfish.maven.plugin.command.DeleteDomainCommand;
+import org.glassfish.maven.plugin.command.StopDomainCommand;
 
 /**
- * Delete an existing domain in a local or remote Glassfish instance
+ * Delete an existing domain in a local or remote Glassfish instance.
  *
  * @author <a href="mailto:dave.whitla@ocean.net.au">Dave Whitla</a>
- * @version $Id: DeleteDomainGlassfishMojo.java 0 Apr 3, 2007 8:24:09 AM dwhitla $
  */
-@Mojo(
-        goal = "delete-domain",
-        phase = Phase.PostIntegrationTest,
-        description = "Delete an existing domain in a local or remote Glassfish instance",
-        requiresProject = true
-)
+@Mojo(name = "delete-domain",
+        defaultPhase = LifecyclePhase.POST_INTEGRATION_TEST,
+        requiresProject = true)
 public class DeleteDomainGlassfishMojo extends GlassfishMojo {
 
-    public void doExecute() throws MojoExecutionException, MojoFailureException {
+    @Override
+    public void execute() throws MojoExecutionException, MojoFailureException {
+        postConfig();
+
         ProcessBuilder processBuilder = new ProcessBuilder();
         if (domain.exists()) {
             new StopDomainCommand(this, domain).execute(processBuilder);

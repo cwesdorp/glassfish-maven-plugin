@@ -36,31 +36,23 @@
 
 package org.glassfish.maven.plugin;
 
-import au.net.ocean.maven.plugin.annotation.Required;
-import au.net.ocean.maven.plugin.annotation.Parameter;
-
 import java.util.Set;
+import org.apache.maven.plugins.annotations.Parameter;
 
 /**
- * Created by dwhitla at Apr 8, 2007 10:09:16 PM
  *
  * @author <a href="mailto:dave.whitla@ocean.net.au">Dave Whitla</a>
- * @version $Id: Realm.java 0 Apr 8, 2007 10:09:16 PM dwhitla $
  */
 public class Realm {
 
     @Parameter
     protected Set<Property> properties;
 
-    @Required
-    @Parameter
+    @Parameter(required = true)
     private String name;
 
-    @Required
-    @Parameter
+    @Parameter(required = true)
     private String className;
-
-
 
     public String getClassName() {
         return className;
@@ -85,4 +77,5 @@ public class Realm {
     public void setName(String name) {
         this.name = name;
     }
+
 }

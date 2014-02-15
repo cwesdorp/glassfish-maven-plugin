@@ -36,26 +36,27 @@
 
 package org.glassfish.maven.plugin;
 
-import au.net.ocean.maven.plugin.annotation.Mojo;
-import static au.net.ocean.maven.plugin.annotation.Phase.PreIntegrationTest;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
+import org.apache.maven.plugins.annotations.LifecyclePhase;
+import org.apache.maven.plugins.annotations.Mojo;
 
 /**
- * Start an existing domain in a local or remote Glassfish instance
+ * Start an existing domain in a local or remote Glassfish instance.
  *
  * @author <a href="mailto:dave.whitla@ocean.net.au">Dave Whitla</a>
- * @version $Id: StartGlassfishMojo.java 0 Apr 3, 2007 8:22:27 AM dwhitla $
  */
-@Mojo (
-        goal = "start-domain",
-        description = "Start an existing domain in a local or remote Glassfish instance",
-        phase = PreIntegrationTest,
-        requiresProject = true
+@Mojo(
+    name = "start-domain",
+    defaultPhase = LifecyclePhase.PRE_INTEGRATION_TEST,
+    requiresProject = true
 )
 public class StartDomainGlassfishMojo extends GlassfishMojo {
 
-    public void doExecute() throws MojoExecutionException, MojoFailureException {
+    @Override
+    public void execute() throws MojoExecutionException, MojoFailureException {
+        postConfig();
+
         new StartDomainMacro(this, domain).execute(new ProcessBuilder());
     }
 

@@ -36,41 +36,40 @@
 
 package org.glassfish.maven.plugin;
 
-import au.net.ocean.maven.plugin.annotation.Parameter;
-import au.net.ocean.maven.plugin.annotation.Required;
-
 import java.io.File;
 import java.io.IOException;
 import java.net.Socket;
 import java.util.Arrays;
 import java.util.Set;
+import org.apache.maven.plugins.annotations.Parameter;
 
 /**
- * Created by dwhitla at Apr 3, 2007 8:45:45 PM
  *
  * @author <a href="mailto:dave.whitla@ocean.net.au">Dave Whitla</a>
- * @version $Id: Domain.java 0 Apr 3, 2007 8:45:45 PM dwhitla $
  */
 public class Domain {
 
-    @Parameter(defaultValue = "localhost", description = "The target host")
+    /**
+     * The target host.
+     */
+    @Parameter(defaultValue = "localhost")
     private String host = "localhost";
 
-    @Parameter(
-            expression = "${domainDirectory}",
-            description = "The directory in which this domain should be created (if other than the Glassfish default).\n" +
-            "Overrides the value of domainDirectory in global configuration.\n" +
-            "This value is ignored if the host is other than localhost.")
+    /**
+     * The directory in which this domain should be created (if other than the Glassfish default).
+     * Overrides the value of domainDirectory in global configuration. This value is ignored if the
+     * host is other than localhost.
+     */
+    @Parameter(defaultValue = "${domainDirectory}")
     private File directory;
 
-    @Parameter(expression = "${project.artifactId}")
+    @Parameter(defaultValue = "${project.artifactId}")
     private String name;
 
-    @Parameter(expression = "${domainDirectory}/${name}/log")
+    @Parameter(defaultValue = "${domainDirectory}/${name}/log")
     private File logDirectory;
 
-    @Required
-    @Parameter
+    @Parameter(required = true)
     private int adminPort;
 
     @Parameter
@@ -113,7 +112,10 @@ public class Domain {
     @Parameter
     private Set<Resource> resources;
 
-    @Parameter(description = "The admin password to use for this domain.")
+    /**
+     * The admin password to use for this domain.
+     */
+    @Parameter
     private String adminPassword;
 
 
@@ -236,7 +238,7 @@ public class Domain {
     public void setResourceDescriptor(String resourceDescriptor) {
         this.resourceDescriptor = resourceDescriptor;
     }
-    
+
     public Set<Resource> getResources() {
         return resources;
     }
@@ -284,5 +286,5 @@ public class Domain {
     public void setDirectory(File directory) {
         this.directory = directory;
     }
-    
+
 }

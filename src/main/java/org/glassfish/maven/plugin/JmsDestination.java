@@ -36,25 +36,20 @@
 
 package org.glassfish.maven.plugin;
 
-import au.net.ocean.maven.plugin.annotation.Parameter;
-import au.net.ocean.maven.plugin.annotation.Required;
+import org.apache.maven.plugins.annotations.Parameter;
 
 /**
- * Created by dwhitla at Jun 21, 2007 11:29:02 PM
+ * Describes general JMS destination properties.
  *
  * @author <a href="mailto:dave.whitla@ocean.net.au">Dave Whitla</a>
- * @version $Id: JmsDestination.java 0 Jun 21, 2007 11:29:02 PM dwhitla $
  */
 public abstract class JmsDestination extends JmsResource {
 
-    @Required
-    @Parameter(property = "connectionFactory")
+    @Parameter(property = "connectionFactory", required = true)
     private ConnectionFactory connectionFactory;
 
-    @Required
-    @Parameter(property = "destinationName")
+    @Parameter(property = "destinationName", required = true)
     private Destination destination;
-
 
     public void setConnectionFactory(ConnectionFactory connectionFactory) {
         this.connectionFactory = connectionFactory;
@@ -75,6 +70,6 @@ public abstract class JmsDestination extends JmsResource {
 
     public Destination getDestination() {
         return destination;
-    }    
+    }
 
 }

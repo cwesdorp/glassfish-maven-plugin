@@ -36,18 +36,16 @@
 
 package org.glassfish.maven.plugin;
 
-import au.net.ocean.maven.plugin.annotation.Parameter;
-import au.net.ocean.maven.plugin.annotation.Required;
-
 import java.util.Set;
+import org.apache.maven.plugins.annotations.Parameter;
 
 /**
- * Created by dwhitla at Apr 10, 2007 1:23:47 PM
+ * Describes a JDBC data source configuration.
  *
  * @author <a href="mailto:dave.whitla@ocean.net.au">Dave Whitla</a>
  */
 public class JdbcDataSource implements Resource {
-    
+
     private static final int DEFAULT_MAX_POOL_SIZE = 50;
     private static final int DEFAULT_STEADY_POOL_SIZE = 5;
     private static final int DEFAULT_IDLE_TIMEOUT = 300;
@@ -59,12 +57,13 @@ public class JdbcDataSource implements Resource {
         metaData("meta-data"),
         table("table");
 
-        private String realName;
+        private final String realName;
 
         ValidationMethod(String realName) {
             this.realName = realName;
         }
 
+        @Override
         public String toString() {
             return realName;
         }
@@ -79,25 +78,20 @@ public class JdbcDataSource implements Resource {
         }
     }
 
-    @Required
-    @Parameter
+    @Parameter(required = true)
     private String poolName;
 
-    @Required
-    @Parameter
+    @Parameter(required = true)
     private String className;
 
-    @Required
-    @Parameter
+    @Parameter(required = true)
     private String name;
 
-    @Required
     @Parameter
     private String description;
 
-    @Required
-    @Parameter(property = "type")
-    private Type _type;
+    @Parameter(property = "type", required = true)
+    private Type aType;
 
     @Parameter(defaultValue = "true")
     private boolean allowNonComponentCallers = true;
@@ -265,10 +259,10 @@ public class JdbcDataSource implements Resource {
     }
 
     public Type getType() {
-        return _type;
+        return aType;
     }
 
     public void setType(String type) {
-        this._type = Type.valueOf(type);
+        this.aType = Type.valueOf(type);
     }
 }

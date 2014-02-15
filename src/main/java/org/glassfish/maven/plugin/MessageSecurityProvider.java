@@ -36,17 +36,13 @@
 
 package org.glassfish.maven.plugin;
 
-import au.net.ocean.maven.plugin.annotation.Parameter;
-import au.net.ocean.maven.plugin.annotation.Required;
-
 import java.text.MessageFormat;
 import java.util.Set;
+import org.apache.maven.plugins.annotations.Parameter;
 
 /**
- * Created by dwhitla at Apr 10, 2007 12:22:48 AM
  *
- * @author <a href="mailto:dave.whitla@ocean.net.au">Dave Whitla</a>
- * @version $Id: MessageSecurityProvider.java 0 Apr 10, 2007 12:22:48 AM dwhitla $
+ * @author chris
  */
 public class MessageSecurityProvider {
 
@@ -66,7 +62,7 @@ public class MessageSecurityProvider {
     public enum RecipientAuthPhase {
         BeforeContent("before-content");
 
-        private String label;
+        private final String label;
 
         private RecipientAuthPhase(String label) {
             this.label = label;
@@ -88,20 +84,16 @@ public class MessageSecurityProvider {
     }
 
 
-    @Required
-    @Parameter
+    @Parameter(required = true)
     private String name;
 
-    @Required
-    @Parameter
+    @Parameter(required = true)
     private Layer layer;
 
-    @Required
-    @Parameter
+    @Parameter(required = true)
     private Type type;
 
-    @Required
-    @Parameter
+    @Parameter(required = true)
     private String className;
 
     @Parameter
@@ -214,5 +206,5 @@ public class MessageSecurityProvider {
     public void setProperties(Set<Property> properties) {
         this.properties = properties;
     }
-    
+
 }
