@@ -1,0 +1,330 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+
+
+
+
+
+
+
+
+<html>
+  <head>
+    <title>Maven Glassfish Plugin - Usage</title>
+    <style type="text/css" media="all">
+      @import url("../css/maven-base.css");
+      @import url("../css/maven-theme.css");
+      @import url("../css/site.css");
+    </style>
+    <link rel="stylesheet" href="../css/print.css" type="text/css" media="print" />
+          <meta name="author" content="Dave Whitla dave.whitla@ocean.net.au" />
+        <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+                </head>
+  <body class="composite">
+    <!-- TODO: move this into JavaScript to patch the skin
+      <div class="xright">      <a href="http://www.apache.org/">Apache</a>
+          |
+          <a href="http://maven.apache.org/">Maven</a>
+          |
+          <a href="http://maven.apache.org/plugins/">Maven Plugins</a>
+      </div>
+    -->
+    <div id="leftColumn">
+      <div id="navcolumn">
+             <dl class=navgroup>
+        <dt>Overview</dt>
+        <dd><ul>
+
+    <li class="none">
+              <a href="../index.html">Introduction</a>
+        </li>
+
+    <li class="none">
+              <a href="../plugin-info.html">Goals</a>
+        </li>
+
+    <li class="none">
+              <a href="../usage.html">Usage</a>
+        </li>
+
+    <li class="none">
+              <a href="../faq.html">FAQ</a>
+        </li>
+          </ul></dd>
+    </dl>
+      <dl class=navgroup>
+        <dt>Examples</dt>
+        <dd><ul>
+
+    <li class="none">
+              <a href="../examples/complete.html">Complete example</a>
+        </li>
+
+    <li class="none">
+              <strong>Using profiles</strong>
+        </li>
+          </ul></dd>
+    </dl>
+      <dl class=navgroup>
+        <dt>Project Documentation</dt>
+        <dd><ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <li class="collapsed">
+              <a href="../project-info.html">Project Information</a>
+              </li>
+
+
+
+
+
+        <li class="collapsed">
+              <a href="../project-reports.html">Project Reports</a>
+              </li>
+          </ul></dd>
+    </dl>
+        </div>
+      <script>
+        // replace the java.net project tools with the navigation bar from Maven.
+        // also get rid of "Get Involved" thingie too, while we are at it
+        var pt = document.getElementById("projecttools");
+        var nv = document.getElementById("navcolumn");
+
+        while(pt.previousSibling!=null)
+          pt.parentNode.removeChild(pt.previousSibling);
+
+        pt.parentNode.insertBefore(nv,pt);
+        pt.parentNode.removeChild(pt);
+      </script>
+      <script>
+        // kill "description" h3 bar
+        var ld = document.getElementById("longdescription");
+        if(ld!=null) {
+          for( n=ld.firstChild; n!=null; n=n.nextSibling ) {
+            if(n.nodeType==1 && n.innerHTML=="Description" ) {
+              n.parentNode.removeChild(n);
+              break;
+            }
+          }
+        }
+      </script>
+    </div>
+    <div id="bodyColumn">
+      <div id="contentBox">
+        <div class="section"><h2>Profiles</h2>
+<p>In this example when the <tt>ci</tt>
+ profile is activated the domain will be created before, and deleted after the <b>integration-test</b>
+ phase. This is typically desireable in a continuous integration environment which will deploy many Glassfish domains over time for unrelated projects.</p>
+<p>The <tt>developer</tt>
+ profile, in contrast, will <b>hot</b>
+ deploy upon each build run, shortening the code-build-test loop. In this environment the domain would only need recreation if its configuration changed. This is an infrequent occurrence and is handled by invoking the <b>glassfish:create-domain</b>
+ mojo directly.</p>
+<p>IDEs with evolved Maven2 support, such as IntelliJ IDEA, make this trivial.</p>
+<div class="source"><pre>&lt;project&gt;
+    ...
+    &lt;profiles&gt;
+        ...
+        &lt;profile&gt;
+            &lt;id&gt;developer&lt;/id&gt;
+            &lt;activation&gt;
+                &lt;activeByDefault&gt;false&lt;/activeByDefault&gt;
+                &lt;property&gt;
+                    &lt;name&gt;profile&lt;/name&gt;
+                    &lt;value&gt;developer&lt;/value&gt;
+                &lt;/property&gt;
+            &lt;/activation&gt;
+            &lt;build&gt;
+                &lt;pluginManagement&gt;
+                    &lt;plugins&gt;
+                        &lt;plugin&gt;
+                            &lt;groupId&gt;org.glassfish.maven.plugin&lt;/groupId&gt;
+                            &lt;artifactId&gt;maven-glassfish-plugin&lt;/artifactId&gt;
+                            &lt;executions&gt;
+                                &lt;execution&gt;
+                                    &lt;goals&gt;
+                                        &lt;goal&gt;deploy&lt;/goal&gt;
+                                    &lt;/goals&gt;
+                                &lt;/execution&gt;
+                            &lt;/executions&gt;
+                        &lt;/plugin&gt;
+                    &lt;/plugins&gt;
+                &lt;/pluginManagement&gt;
+            &lt;/build&gt;
+        &lt;/profile&gt;
+        ...
+        &lt;profile&gt;
+            &lt;id&gt;ci&lt;/id&gt;
+            &lt;activation&gt;
+                &lt;activeByDefault&gt;false&lt;/activeByDefault&gt;
+                &lt;property&gt;
+                    &lt;name&gt;profile&lt;/name&gt;
+                    &lt;value&gt;ci&lt;/value&gt;
+                &lt;/property&gt;
+            &lt;/activation&gt;
+            &lt;properties&gt;
+                &lt;as.domain.dir&gt;/tmp&lt;/as.domain.dir&gt;
+            &lt;/properties&gt;
+            &lt;build&gt;
+                &lt;pluginManagement&gt;
+                    &lt;plugins&gt;
+                        &lt;plugin&gt;
+                            &lt;groupId&gt;org.glassfish.maven.plugin&lt;/groupId&gt;
+                            &lt;artifactId&gt;maven-glassfish-plugin&lt;/artifactId&gt;
+                            &lt;executions&gt;
+                                &lt;execution&gt;
+                                    &lt;goals&gt;
+                                        &lt;goal&gt;create-domain&lt;/goal&gt;
+                                        &lt;goal&gt;deploy&lt;/goal&gt;
+                                        &lt;goal&gt;delete-domain&lt;/goal&gt;
+                                    &lt;/goals&gt;
+                                &lt;/execution&gt;
+                            &lt;/executions&gt;
+                        &lt;/plugin&gt;
+                    &lt;/plugins&gt;
+                &lt;/pluginManagement&gt;
+            &lt;/build&gt;
+        &lt;/profile&gt;
+        ...
+    &lt;/profiles&gt;
+    ...
+&lt;/project&gt;</pre>
+</div>
+</div>
+<div class="section"><h2>Per-User Settings</h2>
+<p>You may also find it convenient to use a combination of <tt>settings.xml</tt> and <tt>profiles.xml</tt> configuration to supply plugin parameters which are necessarily different for each developer on your project.
+An obvious example is the <tt>glassfishDirectory</tt> plugin parameter, which may be set using the expression <tt>${glassfish.home}</tt>.</p>
+<p>I prefer not to set this in the POM, but rather to add something like the following to my <tt>~/.m2/settings.xml</tt> file:</p>
+<div class="source"><pre>&lt;settings
+        xmlns="http://maven.apache.org/Settings/1.0.0"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://maven.apache.org/Settings/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd"&gt;
+    &lt;profiles&gt;
+        ...
+        &lt;profile&gt;
+            &lt;id&gt;glassfishV2&lt;/id&gt;
+            &lt;activation&gt;
+                &lt;activeByDefault&gt;false&lt;/activeByDefault&gt;
+                &lt;property&gt;
+                    &lt;name&gt;glassfish.version&lt;/name&gt;
+                    &lt;value&gt;2&lt;/value&gt;
+                &lt;/property&gt;
+            &lt;/activation&gt;
+            &lt;properties&gt;
+                &lt;glassfish.home&gt;/Users/dwhitla/Applications/Dev/glassfish/v2&lt;/glassfish.home&gt;
+            &lt;/properties&gt;
+        &lt;/profile&gt;
+
+        &lt;profile&gt;
+            &lt;id&gt;glassfishV3&lt;/id&gt;
+            &lt;activation&gt;
+                &lt;activeByDefault&gt;false&lt;/activeByDefault&gt;
+                &lt;property&gt;
+                    &lt;name&gt;glassfish.version&lt;/name&gt;
+                    &lt;value&gt;3&lt;/value&gt;
+                &lt;/property&gt;
+            &lt;/activation&gt;
+            &lt;properties&gt;
+                &lt;glassfish.home&gt;/Users/dwhitla/Applications/Dev/glassfish/v3&lt;/glassfish.home&gt;
+            &lt;/properties&gt;
+        &lt;/profile&gt;
+        ...
+    &lt;/profiles&gt;
+
+    &lt;activeProfiles&gt;
+        &lt;activeProfile&gt;glassfishV2&lt;/activeProfile&gt;
+    &lt;/activeProfiles&gt;
+    ...
+&lt;/settings&gt;</pre>
+</div>
+<p>Any of the plugin parameters which declare an <tt>expression</tt> may be set in this way, via a profile property, via a POM property or via a Java -D property. The default expression for a plugin parameter according to the Maven plugin developer documentation is the name of the parameter, but my experience with relying upon this has not been favourable.</p>
+<p>Another technique which I find useful is to enable an empty profile by default in <tt>settings.xml</tt>, for example:</p>
+<div class="source"><pre>&lt;profile&gt;
+    &lt;id&gt;dwhitla&lt;/id&gt;
+    &lt;activation&gt;
+        &lt;activeByDefault&gt;true&lt;/activeByDefault&gt;
+    &lt;/activation&gt;
+&lt;/profile&gt;</pre>
+</div>
+<p>and create a profiles.xml, in the Maven modules I want to provide customised configuration for, in which I declare a profile with the same name:</p>
+<div class="source"><pre>&lt;profiles&gt;
+    &lt;!--
+    there are basically two options here. You can either:
+     * create a profile with an arbitrary name (eg: dwhitla) and
+     activate it explicitly (eg: mvn -Pdwhitla clean package) wherein
+     you need only override those properties or build settings which
+     you want to change from the sum of default build and active POM profiles.
+     You can also have this profile invoked automatically by adding a profile with
+     the same name in your ~/.m2/settings.xml file with activeByDefault set to true; or
+
+     * create a profile with the same name as an active POM profile (eg: developer)
+     overriding those properties you wish to change AND COPYING ALL PROPERTIES YOU
+     DON'T WANT TO OVERRIDE.
+    --&gt;
+    &lt;profile&gt;
+        &lt;id&gt;dwhitla&lt;/id&gt;
+        &lt;properties&gt;
+            &lt;glassfish.home&gt;/Users/dwhitla/Applications/Dev/glassfish/v2&lt;/glassfish.home&gt;
+            &lt;glassfish.adminUser&gt;dwhitla&lt;/glassfish.adminUser&gt;
+            &lt;glassfish.adminPassword&gt;password&lt;/glassfish.adminPassword&gt;
+            &lt;glassfish.echo&gt;false&lt;/glassfish.echo&gt;
+            &lt;glassfish.terse&gt;true&lt;/glassfish.terse&gt;
+            &lt;glassfish.debug&gt;false&lt;/glassfish.debug&gt;
+
+            &lt;database.password&gt;asdfasdf&lt;/database.password&gt;
+        &lt;/properties&gt;
+    &lt;/profile&gt;
+&lt;/profiles&gt;</pre>
+</div>
+<p>As you typically want to specify sensitive property values, such as passwords, in these profiles it is generally a good idea to exclude them from your revision control system - even more so if you are working on an open-source project.</p>
+<p>A point to note regarding profiles however, is that if you override a POM defined profile with one in <tt>profiles.xml</tt> (by declaring them with the same id), any properties in the overridden POM profile which are not explicitly set in the <tt>profiles.xml</tt> definition will not be set in the execution of your Maven build.</p>
+</div>
+
+      </div>
+    </div>
+    <div class="clear">
+      <hr/>
+    </div>
+    <div id="footer">
+      <div class="xright">&#169;
+          2007-2008
+
+
+
+
+
+
+  &nbsp;| Last Published: 01 Sep 2008
+  &nbsp;| Version: 2.1
+</div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+      <script type="text/javascript">
+          var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+          document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+      </script>
+      <script type="text/javascript">
+          var pageTracker = _gat._getTracker("UA-5898043-1");
+          pageTracker._trackPageview();
+      </script>
+  </body>
+</html>

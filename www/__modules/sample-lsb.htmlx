@@ -1,0 +1,190 @@
+	  <div id="navcol">
+	    <dl id="projecttools" class="navgroup" style="text-align: left;">
+	      <dt id="current-zone" class="depth0">
+		<a href="http://glassfish.java.net/">GlassFish Community</a>
+	      </dt>
+	      <dd class="depth0 parent parent" id="menubar">
+	<!-- menubar for the main site -->
+	<ul id="main-menubar">
+    <li>
+      <a href="http://glassfish.java.net/public/downloadsindex.html" match="/downloads/">Downloads</a>
+    <li>
+      <a href="http://java.net/projects/glassfish/lists/announce/archive">Announcements</a>
+    <li>
+      <a href="http://java.net/projects/glassfish/lists">Mailing lists</a>
+    <li>
+      <a href="http://forums.java.net/jive/forum.jspa?forumID=56&amp;start=0">Discussion forums</a>
+    <li>
+      <a href="#" match="http://glassfish.java.net/public/users.html">Using GlassFish</a>
+      <ul>
+        <li>
+          <a href="http://glassfish.java.net/public/CDDL+GPL.html">License</a>
+        <li>
+          <a href="http://glassfish.java.net/public/faq/index.html" match="/public/faq/.*">GlassFish FAQ</a>
+        <li>
+          <a href="http://wikis.sun.com/display/GlassFish/GlassFishWiki">GlassFish Wiki</a>
+        <li>
+          <a href="http://glassfish.java.net/docs/index.html">Documentation</a>
+        <li>
+          <a href="http://glassfish.java.net/public/TipsandBlogs.html">Tech Tips and Blogs</a>
+        <li>
+          <a href="http://glassfish.java.net/nonav/javaee5/api/index.html">Javadocs</a>
+        <li>
+          <a href="mailto:feedback@glassfish.java.net">Send us feedback</a>
+      </ul>
+	  <li>
+      <a href="http://www.sun.com/training/catalog/java/index.xml">Training</a>
+    <li>
+      <a href="#">Samples</a>
+      <ul>
+        <li>
+          <a href="http://blueprints.java.net">Blueprints Samples</a>
+        </li>
+        <li>
+          <a href="http://glassfish-samples.java.net">GlassFish Samples</a>
+        </li>
+      </ul>
+    <li>
+      <a href="#" match="http://glassfish.java.net/public/devindex.html">Developing GlassFish</a>
+      <ul>
+        <li>
+          <a href="http://java.net/projects/glassfish/watch">Request Role</a>
+        <li>
+          <a href="http://wikis.sun.com/display/GlassFish/BuildInformation">Build Instructions</a>
+        <li>
+          <a href="http://hudson.glassfish.org/job/gf-preview-build-continuous/">Continuous Build</a>
+        <li>
+          <a href="http://fisheye4.cenqua.com/browse/glassfish-svn">FishEye(SVN)</a>
+        <li>
+          <a href="http://java.net/projects/glassfish/sources/svn0/show">CVS repository</a>
+        <li>
+          <a href="http://fisheye5.cenqua.com/browse/glassfish">FishEye(CVS)</a>
+      </ul>
+    <li>
+      <a href="http://glassfish.java.net/quality/portal/index.html">GlassFish Quality Community</a>
+    <li>
+	  <a href="http://glassfish.java.net/docs/project.html">Documentation Community</a>
+	<li>
+      <a href="http://java.net/jira/browse/GLASSFISH">Issue tracker</a>
+    <li>
+      <a href="http://glassfish.java.net/ja/">&#x65e5;&#x672c;&#x8a9e;</a>
+    <li>
+      <a href="http://glassfish.java.net/zh/">&#x7b80;&#x4f53;&#x4e2d;&#x6587;</a>
+    <li>
+      <a href="#">Other Languages</a>
+      <ul>
+        <li>
+          <a href="http://glassfish.java.net/de/">Deutsch</a>
+        <li>
+          <a href="http://glassfish.java.net/es/">Espa&ntilde;ol</a>
+        <li>
+          <a href="http://glassfish.java.net/fr/">Fran&ccedil;ais</a>
+        <li>
+          <a href="http://glassfish.java.net/ko/">&#xd55c;&#xad6d;&#xc5b4;</a>
+        <li>
+          <a href="http://glassfish.java.net/zh_TW/">&#x7e41;&#x9ad4;&#x4e2d;&#x6587;</a>
+      </ul>
+  </ul>
+  <!-- menubar for the Japanese localization site -->
+  <!-- Use http://piro.sakura.ne.jp/latest/entries/mozilla/xul/2005-09-28_unicode-escape.files/unicode.xul -->
+  <ul id="ja-menubar" style="display:none;">
+    <li>
+      <a href="http://glassfish.java.net/public/downloadsindex.html">&#x30c0;&#x30a6;&#x30f3;&#x30ed;&#x30fc;&#x30c9;</a>
+    <li>
+      <a href="http://java.net/projects/glassfish/lists/announce/archive">&#x30cb;&#x30e5;&#x30fc;&#x30b9;</a>
+    <li>
+      <a href="http://java.net/projects/glassfish/lists">&#x30e1;&#x30fc;&#x30ea;&#x30f3;&#x30b0;&#x30ea;&#x30b9;&#x30c8;</a>
+    <li>
+      <a href="http://forums.java.net/jive/forum.jspa?forumID=56&amp;start=0">&#x30d5;&#x30a9;&#x30fc;&#x30e9;&#x30e0;</a>
+    <li>
+      <a href="#" match="/ja/public/users.html">GlassFish &#x3092;&#x5229;&#x7528;&#x3059;&#x308b;</a>
+      <ul>
+        <li>
+          <a href="http://glassfish.java.net/ja/public/faq/index.html">GlassFish FAQ</a>
+        <li>
+          <a href="http://wikis.sun.com/display/GlassFish/GlassFishWiki">GlassFish Wiki</a>
+        <li>
+          <a href="http://glassfish.java.net/javaee5/docs/DocsIndex.html">&#x30c9;&#x30ad;&#x30e5;&#x30e1;&#x30f3;&#x30c8;</a>
+        <li>
+          <a href="http://glassfish.java.net/public/TipsandBlogs.html">Tech Tips and Blogs</a>
+        <li>
+          <a href="http://glassfish.java.net/nonav/javaee5/api/index.html">Javadocs</a>
+        <li>
+          <a href="mailto:feedback@glassfish.java.net">Send us feedback</a>
+      </ul>
+    <li>
+      <a href="#">&#x30b5;&#x30f3;&#x30d7;&#x30eb;</a>
+      <ul>
+        <li>
+          <a href="http://blueprints.java.net">Blueprints &#x30b5;&#x30f3;&#x30d7;&#x30eb;</a>
+        </li>
+        <li>
+          <a href="http://glassfish-samples.java.net">GlassFish &#x30b5;&#x30f3;&#x30d7;&#x30eb;</a>
+        </li>
+      </ul>
+    <li>
+      <a href="#" match="/ja/public/devindex.html">GlassFish &#x306e;&#x958b;&#x767a;</a>
+      <ul>
+        <li>
+          <a href="http://wikis.sun.com/display/GlassFish/BuildInformation">&#x30d3;&#x30eb;&#x30c9;&#x624b;&#x9806;</a>
+        <li>
+          <a href="http://fisheye4.cenqua.com/browse/glassfish-svn">FishEye(SVN)</a>
+        <li>
+          <a href="http://java.net/projects/glassfish/sources/svn0/show">CVS &#x30ea;&#x30dd;&#x30b8;&#x30c8;&#x30ea;</a>
+        <li>
+          <a href="http://fisheye.cenqua.com/java.net/viewrep/cvs/glassfish">FishEye(CVS)</a>
+      </ul>
+    <li>
+      <a href="http://java.net/jira/browse/GLASSFISH">Issue tracker</a>
+    <li>
+      <a href="http://glassfish.java.net/zh/">&#x7b80;&#x4f53;&#x4e2d;&#x6587;</a>
+    <li>
+      <a href="http://glassfish.java.net/index.html">&#x82f1;&#x8a9e;</a>
+	</ul>
+<script>
+var info = {
+  title: "Community"
+};
+
+if(window.location.href.indexOf("http://glassfish.java.net/ja/")==0) {
+  document.getElementById("main-menubar").style.display = "none";
+  document.getElementById("ja-menubar").style.display = "";
+}
+</script>
+<script src="http://glassfish-theming.java.net/zone-core.js"></script>
+<script src="http://glassfish-theming.java.net/theme.js"></script>
+
+
+<!-- create the location bar short-cut -->
+<script>
+addLoadEvent(function() {
+	var html = [];
+
+	function addIcon(href,image,text) {
+		html.push("<div align=center style='float:right; margin:0.5em;'><a href='");
+		html.push(href);
+		html.push("'><img border=0 alt='");
+		html.push(text);
+		html.push("' src='/image/");
+		html.push(image);
+		html.push("'/></a><br><a href='");
+		html.push(href);
+		html.push("'>");
+		html.push(text);
+		html.push("</a></div>");
+	}
+	
+	// added in the reverse order
+	//addIcon("/public/devindex.html","srcbrowse.gif","Get Involved");
+	//addIcon("/public/users.html","communities.gif","Get Started");
+	//addIcon("/public/downloadsindex.html","download.gif","Download");
+	
+	var div = document.createElement("div");
+	div.innerHTML = html.join('');
+	div.style.float = "right";
+	div.style.marginTop = "1em";
+	
+	var logobox = document.getElementById("logo-box");
+	logobox.parentNode.insertBefore(div,logobox);
+});
+</script>

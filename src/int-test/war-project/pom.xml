@@ -1,0 +1,281 @@
+<!--
+  ~ DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
+  ~
+  ~ Copyright 2007-2008 maven-glassfish-plugin developers. All rights reserved.
+  ~
+  ~ The contents of this file are subject to the terms of either the GNU
+  ~ General Public License Version 2 only ("GPL") or the Common Development
+  ~ and Distribution License("CDDL") (collectively, the "License").  You
+  ~ may not use this file except in compliance with the License. You can obtain
+  ~ a copy of the License at https://glassfish.dev.java.net/public/CDDL+GPL.html
+  ~ or glassfish/bootstrap/legal/LICENSE.txt.  See the License for the specific
+  ~ language governing permissions and limitations under the License.
+  ~
+  ~ When distributing the software, include this License Header Notice in each
+  ~ file and include the License file at glassfish/bootstrap/legal/LICENSE.txt.
+  ~ Sun designates this particular file as subject to the "Classpath" exception
+  ~ as provided by the copyright holder in the GPL Version 2 section of the
+  ~ License file that accompanied this code.  If applicable, add the following
+  ~ below the License Header, with the fields enclosed by brackets [] replaced
+  ~ by your own identifying information:
+  ~ "Portions Copyrighted [year] [name of copyright owner]"
+  ~
+  ~ Contributor(s):
+  ~
+  ~ If you wish your version of this file to be governed by only the CDDL or
+  ~ only the GPL Version 2, indicate your decision by adding "[Contributor]
+  ~ elects to include this software in this distribution under the [CDDL or GPL
+  ~ Version 2] license."  If you don't indicate a single choice of license, a
+  ~ recipient has the option to distribute your version of this file under
+  ~ either the CDDL, the GPL Version 2 or to extend the choice of license to
+  ~ its licensees as provided above.  However, if you add GPL Version 2 code
+  ~ and therefore, elected the GPL Version 2 license, then the option applies
+  ~ only if the new code is made subject to such option by the copyright
+  ~ holder.
+  -->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.glassfish.maven.plugin</groupId>
+    <artifactId>maven-glassfish-plugin-wartest</artifactId>
+    <packaging>war</packaging>
+    <version>2.1-SNAPSHOT</version>
+    <name>Maven Glassfish Plugin WAR Test</name>
+
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.1</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <!--<scm>-->
+        <!--<connection>scm:svn:file://localhost/${project.file.parentFile.parentFile}/target/svnroot/trunk/project</connection>-->
+        <!--<developerConnection>-->
+        <!--scm:svn:file://localhost/${project.file.parentFile.parentFile}/target/svnroot/trunk/project-->
+        <!--</developerConnection>-->
+    <!--</scm>-->
+
+    <pluginRepositories>
+        <pluginRepository>
+            <id>release.ocean.net.au</id>
+            <name>Ocean Release Repository</name>
+            <url>http://maven.ocean.net.au/release</url>
+            <releases>
+                <enabled>true</enabled>
+                <updatePolicy>daily</updatePolicy>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+                <updatePolicy>never</updatePolicy>
+            </snapshots>
+        </pluginRepository>
+        <pluginRepository>
+            <id>snapshot.ocean.net.au</id>
+            <name>Ocean Release Repository</name>
+            <url>http://maven.ocean.net.au/snapshot</url>
+            <releases>
+                <enabled>false</enabled>
+                <updatePolicy>never</updatePolicy>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>always</updatePolicy>
+            </snapshots>
+        </pluginRepository>
+    </pluginRepositories>
+
+    <properties>
+        <glassfishDirectory>asdf</glassfishDirectory>
+    </properties>
+    
+    <build>
+
+        <resources>
+            <!-- filter resources -->
+            <resource>
+                <directory>${basedir}/src/main/resources</directory>
+                <includes>
+                    <include>*</include>
+                    <include>**/*</include>
+                </includes>
+                <filtering>true</filtering>
+            </resource>
+            <!-- filter war-sources -->
+            <resource>
+                <directory>${basedir}/src/main/webapp</directory>
+                <targetPath>../exploded</targetPath>
+                <includes>
+                    <include>*</include>
+                    <include>**/*</include>
+                </includes>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+
+        <plugins>
+            <plugin>
+                <groupId>org.glassfish.maven.plugin</groupId>
+                <artifactId>maven-glassfish-plugin</artifactId>
+                <version>2.1-SNAPSHOT</version>
+                <configuration>
+                    <adminPassword>password</adminPassword>
+                    <autoCreate>true</autoCreate>
+                    <debug>false</debug>
+                    <echo>true</echo>
+                    <terse>false</terse>
+                    <skip>${test.int.skip}</skip>
+                    <domain>
+                        <name>${project.artifactId}</name>
+                        <adminPort>4848</adminPort>
+                        <httpPort>8080</httpPort>
+                        <httpsPort>8443</httpsPort>
+                        <iiopPort>3700</iiopPort>
+                        <jmsPort>7676</jmsPort>
+                        <reuse>false</reuse>
+                        <jvmOptions>
+                            <option>-Djava.security.auth.login.config=${project.build.outputDirectory}/login.conf</option>
+                        </jvmOptions>
+                        <properties>
+                            <property>
+                                <name>server.java-config.debug-enabled</name>
+                                <value>false</value>
+                            </property>
+                            <property>
+                                <name>server.log-service.file</name>
+                                <value>${project.build.directory}/artifacts/glassfish/server.log</value>
+                            </property>
+                        </properties>
+                        <auth>
+                            <realm>
+                                <name>testRealm</name>
+                                <className>com.sun.enterprise.security.auth.realm.file.FileRealm</className>
+                                <properties>
+                                    <property>
+                                        <name>jaas-context</name>
+                                        <value>test</value>
+                                    </property>
+                                    <property>
+                                        <name>file</name>
+                                        <value>${project.build.outputDirectory}/keyfile</value>
+                                    </property>
+                                </properties>
+                            </realm>
+                        </auth>
+                        <resources>
+                            <connectionFactory>
+                                <jndiName>jms/testQueueConnectionFactory</jndiName>
+                                <type>queueConnectionFactory</type>
+                                <properties>
+                                    <property>
+                                        <name>UserName</name>
+                                        <value>guest</value>
+                                    </property>
+                                    <property>
+                                        <name>Password</name>
+                                        <value>guest</value>
+                                    </property>
+                                    <property>
+                                        <name>AddressList</name>
+                                        <value>localhost:7676</value>
+                                    </property>
+                                </properties>
+                            </connectionFactory>
+                            <jmsTopic>
+                                <jndiName>jms/testTopic</jndiName>
+                                <destinationName>TestTopic</destinationName>
+                                <connectionFactory>
+                                    <jndiName>jms/testTopicConnectionFactory</jndiName>
+                                    <properties>
+                                        <property>
+                                            <name>UserName</name>
+                                            <value>guest</value>
+                                        </property>
+                                        <property>
+                                            <name>Password</name>
+                                            <value>guest</value>
+                                        </property>
+                                        <property>
+                                            <name>AddressList</name>
+                                            <value>localhost:7676</value>
+                                        </property>
+                                    </properties>
+                                </connectionFactory>
+                            </jmsTopic>
+                            <jdbcDataSource>
+                                <name>testDS</name>
+                                <poolName>testJDBCPool</poolName>
+                                <type>dataSource</type>
+                                <className>org.apache.derby.jdbc.ClientDataSource</className>
+                                <description>Test_Connection_Pool</description>
+                                <allowNonComponentCallers>false</allowNonComponentCallers>
+                                <properties>
+                                    <property>
+                                        <name>PortNumber</name>
+                                        <value>1555</value>
+                                    </property>
+                                    <property>
+                                        <name>Password</name>
+                                        <value>test</value>
+                                    </property>
+                                    <property>
+                                        <name>User</name>
+                                        <value>test</value>
+                                    </property>
+                                    <property>
+                                        <name>serverName</name>
+                                        <value>localhost</value>
+                                    </property>
+                                    <property>
+                                        <name>DatabaseName</name>
+                                        <value>testDB</value>
+                                    </property>
+                                    <property>
+                                        <name>connectionAttributes</name>
+                                        <value>;create=true</value>
+                                    </property>
+                                </properties>
+                            </jdbcDataSource>
+                        </resources>
+                    </domain>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>create-domain</goal>
+                            <goal>deploy</goal>
+                            <goal>delete-domain</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>2.0.2</version>
+                <configuration>
+                    <webappDirectory>${project.build.directory}/exploded</webappDirectory>
+                    <outputDirectory>${project.build.directory}/artifacts</outputDirectory>
+                    <primaryArtifact>false</primaryArtifact>
+                    <warSourceDirectory>${project.build.directory}/exploded</warSourceDirectory>
+                    <archive>
+                        <addMavenDescriptor>false</addMavenDescriptor>
+                    </archive>
+                </configuration>
+            </plugin>
+        </plugins>
+
+    </build>
+
+    <distributionManagement>
+        <repository>
+            <id>repo1</id>
+            <name>Maven Central Repository</name>
+            <url>file://${project.file.parentFile.parentFile}/target/repository</url>
+        </repository>
+    </distributionManagement>
+    
+</project>

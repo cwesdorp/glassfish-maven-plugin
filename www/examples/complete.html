@@ -1,0 +1,319 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+
+
+
+
+
+
+
+
+<html>
+  <head>
+    <title>Maven Glassfish Plugin - Usage</title>
+    <style type="text/css" media="all">
+      @import url("../css/maven-base.css");
+      @import url("../css/maven-theme.css");
+      @import url("../css/site.css");
+    </style>
+    <link rel="stylesheet" href="../css/print.css" type="text/css" media="print" />
+          <meta name="author" content="Dave Whitla dave.whitla@ocean.net.au" />
+        <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+                </head>
+  <body class="composite">
+    <!-- TODO: move this into JavaScript to patch the skin
+      <div class="xright">      <a href="http://www.apache.org/">Apache</a>
+          |
+          <a href="http://maven.apache.org/">Maven</a>
+          |
+          <a href="http://maven.apache.org/plugins/">Maven Plugins</a>
+      </div>
+    -->
+    <div id="leftColumn">
+      <div id="navcolumn">
+             <dl class=navgroup>
+        <dt>Overview</dt>
+        <dd><ul>
+              
+    <li class="none">
+              <a href="../index.html">Introduction</a>
+        </li>
+              
+    <li class="none">
+              <a href="../plugin-info.html">Goals</a>
+        </li>
+              
+    <li class="none">
+              <a href="../usage.html">Usage</a>
+        </li>
+              
+    <li class="none">
+              <a href="../faq.html">FAQ</a>
+        </li>
+          </ul></dd>
+    </dl>
+      <dl class=navgroup>
+        <dt>Examples</dt>
+        <dd><ul>
+              
+    <li class="none">
+              <strong>Complete example</strong>
+        </li>
+              
+    <li class="none">
+              <a href="../examples/profiles.html">Using profiles</a>
+        </li>
+          </ul></dd>
+    </dl>
+      <dl class=navgroup>
+        <dt>Project Documentation</dt>
+        <dd><ul>
+              
+                
+              
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+              
+        <li class="collapsed">
+              <a href="../project-info.html">Project Information</a>
+              </li>
+              
+                
+              
+      
+              
+        <li class="collapsed">
+              <a href="../project-reports.html">Project Reports</a>
+              </li>
+          </ul></dd>
+    </dl>
+        </div>
+      <script>
+        // replace the java.net project tools with the navigation bar from Maven.
+        // also get rid of "Get Involved" thingie too, while we are at it
+        var pt = document.getElementById("projecttools");
+        var nv = document.getElementById("navcolumn");
+        
+        while(pt.previousSibling!=null)
+          pt.parentNode.removeChild(pt.previousSibling);
+        
+        pt.parentNode.insertBefore(nv,pt);
+        pt.parentNode.removeChild(pt);
+      </script>
+      <script>
+        // kill "description" h3 bar
+        var ld = document.getElementById("longdescription");
+        if(ld!=null) {
+          for( n=ld.firstChild; n!=null; n=n.nextSibling ) {
+            if(n.nodeType==1 && n.innerHTML=="Description" ) {
+              n.parentNode.removeChild(n);
+              break;
+            }
+          }
+        }
+      </script>
+    </div>
+    <div id="bodyColumn">
+      <div id="contentBox">
+        <div class="section"><h2><i>Fairly</i>
+ Complete Configuration Example</h2>
+<p>The following example plugin configuration should provide enough information for you to make use of all the features of the Maven Glassfish Plugin.</p>
+<p>Some configuration elements have mutually exclusive alternatives (<tt>adminPassword</tt>
+ and <tt>passFile</tt>
+ are one example). Some other elements are non-exclusive alternatives which exist for flexibility's sake and to support backward compatibility with Glassfish V1 (<tt>resources</tt>
+ and <tt>resourceDescriptor</tt>
+ are an example). The allowed values for each configuration property are detailed on the <a href="../usage.html">usage</a>
+ page;</p>
+<p>If you find any errors, omissions or things you think require further explanation of clarification please drop us a line via the appropriate mailing list or log a bug or feature request via our <a href="http://jira.ocean.net.au/browse/MGP" class="externalLink">JIRA issue tracker</a>
+ kindly provided free of charge by the guys at <a href="http://www.atlassian.com/" class="externalLink">Atlassian</a>
+:</p>
+<div class="source"><pre>&lt;project&gt;
+    ...
+    &lt;build&gt;
+        ...
+        &lt;plugins&gt;
+            ...
+            &lt;plugin&gt;
+                &lt;groupId&gt;org.glassfish.maven.plugin&lt;/groupId&gt;
+                &lt;artifactId&gt;maven-glassfish-plugin&lt;/artifactId&gt;
+                &lt;version&gt;2.1&lt;/version&gt;
+                &lt;configuration&gt;
+                    &lt;glassfishDirectory&gt;${glassfish.home}&lt;/glassfishDirectory&gt;
+                    &lt;user&gt;${domain.username}&lt;/user&gt;
+                    &lt;adminPassword&gt;${domain.password}&lt;/adminPassword&gt;
+                    &lt;!-- &lt;passFile&gt;path/to/asadmin/passfile&lt;/passFile&gt; --&gt;
+                    &lt;autoCreate&gt;true&lt;/autoCreate&gt;
+                    &lt;debug&gt;true&lt;/debug&gt;
+                    &lt;echo&gt;false&lt;/echo&gt;
+                    &lt;terse&gt;true&lt;/terse&gt;
+                    &lt;skip&gt;${test.int.skip}&lt;/skip&gt;
+                    &lt;domain&gt;
+                        &lt;name&gt;${project.artifactId}&lt;/name&gt;
+                        &lt;adminPort&gt;4848&lt;/adminPort&gt;
+                        &lt;httpPort&gt;8080&lt;/httpPort&gt;
+                        &lt;httpsPort&gt;8443&lt;/httpsPort&gt;
+                        &lt;iiopPort&gt;3700&lt;/iiopPort&gt;
+                        &lt;jmsPort&gt;7676&lt;/jmsPort&gt;
+                        &lt;reuse&gt;false&lt;/reuse&gt;
+                        &lt;jvmOptions&gt;
+                            &lt;option&gt;-Djava.security.auth.login.config=${project.build.testOutputDirectory}/login.conf&lt;/option&gt;
+                        &lt;/jvmOptions&gt;
+                        &lt;properties&gt;
+                            &lt;property&gt;
+                                &lt;name&gt;server.log-service.file&lt;/name&gt;
+                                &lt;value&gt;${domain.log.dir}/server.log&lt;/value&gt;
+                            &lt;/property&gt;
+                        &lt;/properties&gt;
+                        &lt;auth&gt;
+                            &lt;realm&gt;
+                                &lt;name&gt;testRealm&lt;/name&gt;
+                                &lt;className&gt;com.sun.enterprise.security.auth.realm.file.FileRealm&lt;/className&gt;
+                                &lt;properties&gt;
+                                    &lt;property&gt;
+                                        &lt;name&gt;jaas-context&lt;/name&gt;
+                                        &lt;value&gt;test&lt;/value&gt;
+                                    &lt;/property&gt;
+                                    &lt;property&gt;
+                                        &lt;name&gt;file&lt;/name&gt;
+                                        &lt;value&gt;${project.build.outputDirectory}/keyfile&lt;/value&gt;
+                                    &lt;/property&gt;
+                                &lt;/properties&gt;
+                            &lt;/realm&gt;
+                        &lt;/auth&gt;
+                        &lt;!-- &lt;resourceDescriptor&gt;path/to/resources.xml&lt;/resourceDescriptor&gt; --&gt;
+                        &lt;resources&gt;
+                            &lt;connectionFactory&gt;
+                                &lt;jndiName&gt;jms/testQueueConnectionFactory&lt;/jndiName&gt;
+                                &lt;type&gt;queueConnectionFactory&lt;/type&gt;
+                                &lt;properties&gt;
+                                    &lt;property&gt;
+                                        &lt;name&gt;UserName&lt;/name&gt;
+                                        &lt;value&gt;guest&lt;/value&gt;
+                                    &lt;/property&gt;
+                                    &lt;property&gt;
+                                        &lt;name&gt;Password&lt;/name&gt;
+                                        &lt;value&gt;guest&lt;/value&gt;
+                                    &lt;/property&gt;
+                                    &lt;property&gt;
+                                        &lt;name&gt;AddressList&lt;/name&gt;
+                                        &lt;value&gt;localhost:7676&lt;/value&gt;
+                                    &lt;/property&gt;
+                                &lt;/properties&gt;
+                            &lt;/connectionFactory&gt;
+                            &lt;jmsTopic&gt;
+                                &lt;jndiName&gt;jms/testTopic&lt;/jndiName&gt;
+                                &lt;destinationName&gt;TestTopic&lt;/destinationName&gt;
+                                &lt;connectionFactory&gt;
+                                    &lt;jndiName&gt;jms/testTopicConnectionFactory&lt;/jndiName&gt;
+                                    &lt;properties&gt;
+                                        &lt;property&gt;
+                                            &lt;name&gt;UserName&lt;/name&gt;
+                                            &lt;value&gt;guest&lt;/value&gt;
+                                        &lt;/property&gt;
+                                        &lt;property&gt;
+                                            &lt;name&gt;Password&lt;/name&gt;
+                                            &lt;value&gt;guest&lt;/value&gt;
+                                        &lt;/property&gt;
+                                        &lt;property&gt;
+                                            &lt;name&gt;AddressList&lt;/name&gt;
+                                            &lt;value&gt;localhost:7676&lt;/value&gt;
+                                        &lt;/property&gt;
+                                    &lt;/properties&gt;
+                                &lt;/connectionFactory&gt;
+                            &lt;/jmsTopic&gt;
+                            &lt;jdbcDataSource&gt;
+                                &lt;name&gt;SomeDS&lt;/name&gt;
+                                &lt;type&gt;connectionPoolDataSource&lt;/type&gt;
+                                &lt;poolName&gt;SomePool&lt;/poolName&gt;
+                                &lt;className&gt;com.mysql.jdbc.jdbc2.optional.MysqlConnectionPoolDataSource&lt;/className&gt;
+                                &lt;description&gt;Some JDBC Connection Pool&lt;/description&gt;
+                                &lt;allowNonComponentCallers&gt;false&lt;/allowNonComponentCallers&gt;
+                                &lt;validateConnections&gt;true&lt;/validateConnections&gt;
+                                &lt;validationMethod&gt;metaData&lt;/validationMethod&gt;
+                                &lt;properties&gt;
+                                    &lt;property&gt;
+                                        &lt;name&gt;portNumber&lt;/name&gt;
+                                        &lt;value&gt;3306&lt;/value&gt;
+                                    &lt;/property&gt;
+                                    &lt;property&gt;
+                                        &lt;name&gt;password&lt;/name&gt;
+                                        &lt;value&gt;somePassword&lt;/value&gt;
+                                    &lt;/property&gt;
+                                    &lt;property&gt;
+                                        &lt;name&gt;user&lt;/name&gt;
+                                        &lt;value&gt;someUser&lt;/value&gt;
+                                    &lt;/property&gt;
+                                    &lt;property&gt;
+                                        &lt;name&gt;serverName&lt;/name&gt;
+                                        &lt;value&gt;some.host.somewhere&lt;/value&gt;
+                                    &lt;/property&gt;
+                                    &lt;property&gt;
+                                        &lt;name&gt;databaseName&lt;/name&gt;
+                                        &lt;value&gt;SomeDB&lt;/value&gt;
+                                    &lt;/property&gt;
+                                &lt;/properties&gt;
+                            &lt;/jdbcDataSource&gt;
+                        &lt;/resources&gt;
+                    &lt;/domain&gt;
+                    &lt;components&gt;
+                        &lt;component&gt;
+                            &lt;name&gt;${project.artifactId}&lt;/name&gt;
+                            &lt;artifact&gt;${project.build.directory}/artifacts/${project.build.finalName}.war&lt;/artifact&gt;
+                        &lt;/component&gt;
+                    &lt;/components&gt;
+                &lt;/configuration&gt;
+            &lt;/plugin&gt;
+            ...
+        &lt;/plugins&gt;
+        ...
+    &lt;/build&gt;
+    ...
+&lt;/project&gt;</pre>
+</div>
+</div>
+
+      </div>
+    </div>
+    <div class="clear">
+      <hr/>
+    </div>
+    <div id="footer">
+      <div class="xright">&#169;  
+          2007-2008
+    
+          
+  
+
+  
+  
+  &nbsp;| Last Published: 01 Sep 2008
+  &nbsp;| Version: 2.1
+</div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+      <script type="text/javascript">
+          var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+          document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+      </script>
+      <script type="text/javascript">
+          var pageTracker = _gat._getTracker("UA-5898043-1");
+          pageTracker._trackPageview();
+      </script>
+  </body>
+</html>

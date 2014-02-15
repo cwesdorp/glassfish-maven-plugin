@@ -1,0 +1,217 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- vbk -->
+
+
+
+
+
+
+
+
+
+<html>
+  <head>
+    <title>Maven Glassfish Plugin - Introduction</title>
+    <style type="text/css" media="all">
+      @import url("./css/maven-base.css");
+      @import url("./css/maven-theme.css");
+      @import url("./css/site.css");
+    </style>
+    <link rel="stylesheet" href="./css/print.css" type="text/css" media="print" />
+          <meta name="author" content="Dave Whitla dave.whitla@ocean.net.au" />
+        <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+                </head>
+  <body class="composite">
+    <!-- TODO: move this into JavaScript to patch the skin
+      <div class="xright">      <a href="http://www.apache.org/">Apache</a>
+          |
+          <a href="http://maven.apache.org/">Maven</a>
+          |
+          <a href="http://maven.apache.org/plugins/">Maven Plugins</a>
+      </div>
+    -->
+    <div id="leftColumn">
+      <div id="navcolumn">
+             <dl class=navgroup>
+        <dt>Overview</dt>
+        <dd><ul>
+              
+    <li class="none">
+              <strong>Introduction</strong>
+        </li>
+              
+    <li class="none">
+              <a href="plugin-info.html">Goals</a>
+        </li>
+              
+    <li class="none">
+              <a href="usage.html">Usage</a>
+        </li>
+              
+    <li class="none">
+              <a href="faq.html">FAQ</a>
+        </li>
+          </ul></dd>
+    </dl>
+      <dl class=navgroup>
+        <dt>Examples</dt>
+        <dd><ul>
+              
+    <li class="none">
+              <a href="examples/complete.html">Complete example</a>
+        </li>
+              
+    <li class="none">
+              <a href="examples/profiles.html">Using profiles</a>
+        </li>
+          </ul></dd>
+    </dl>
+      <dl class=navgroup>
+        <dt>Project Documentation</dt>
+        <dd><ul>
+              
+                
+              
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+              
+        <li class="collapsed">
+              <a href="project-info.html">Project Information</a>
+              </li>
+              
+                
+              
+      
+              
+        <li class="collapsed">
+              <a href="project-reports.html">Project Reports</a>
+              </li>
+          </ul></dd>
+    </dl>
+        </div>
+      <script>
+        // replace the java.net project tools with the navigation bar from Maven.
+        // also get rid of "Get Involved" thingie too, while we are at it
+        var pt = document.getElementById("projecttools");
+        var nv = document.getElementById("navcolumn");
+        
+        while(pt.previousSibling!=null)
+          pt.parentNode.removeChild(pt.previousSibling);
+        
+        pt.parentNode.insertBefore(nv,pt);
+        pt.parentNode.removeChild(pt);
+      </script>
+      <script>
+        // kill "description" h3 bar
+        var ld = document.getElementById("longdescription");
+        if(ld!=null) {
+          for( n=ld.firstChild; n!=null; n=n.nextSibling ) {
+            if(n.nodeType==1 && n.innerHTML=="Description" ) {
+              n.parentNode.removeChild(n);
+              break;
+            }
+          }
+        }
+      </script>
+    </div>
+    <div id="bodyColumn">
+      <div id="contentBox">
+        <div class="section"><h2>Maven Glassfish Plugin</h2>
+<p>The Maven Glassfish Plugin is a Maven2 plugin allowing management of Glassfish domains and component deployments from within the Maven build lifecycle. It encapsulates domain configuration and deployment attributes within the build configuration for a more rapid development integration loop and simplified management of continuous integration testing of components destined for deployment within the Glassfish V2 and later JavaEE containers.</p>
+<div class="section"><h3>Goals Overview</h3>
+<ul><li><a href="create-domain-mojo.html">glassfish:create-domain</a>
+ Create a new Glassfish domain. (Creating an existing domain will cause it to be deleted and recreated.)</li>
+<li><a href="start-domain-mojo.html">glassfish:start-domain</a>
+ Start an existing Glassfish domain. (Starting a non-existent domain will cause it to be created.)</li>
+<li><a href="deploy-mojo.html">glassfish:deploy</a>
+ Deploy JavaEE artifacts to a running domain. (Deploying to an inactive domain will cause it to be started and created if necessary.)</li>
+<li><a href="redeploy-mojo.html">glassfish:redeploy</a>
+ Redeploy JavaEE artifacts to a running domain. (<b>Cold</b>
+ redeployment by first calling <tt>undeploy</tt>
+ and then <tt>deploy</tt>
+. Use <tt>deploy</tt>
+ to effect a <b>hot</b>
+ deployment.)</li>
+<li><a href="undeploy-mojo.html">glassfish:undeploy</a>
+ Undeploy JavaEE components from a running domain.</li>
+<li><a href="stop-domain-mojo.html">glassfish:stop-domain</a>
+ Stop a running Glassfish domain.</li>
+<li><a href="delete-domain-mojo.html">glassfish:delete-domain</a>
+ Delete an existing Glassfish domain.</li>
+</ul>
+</div>
+<div class="section"><h3>Usage</h3>
+<p>Instructions on how to use the Maven Glassfish Plugin can be found <a href="usage.html">here</a>
+. Intelligent IDEs, such as Intellij IDEA 8 also provide Maven plugin configuration autocompletion.</p>
+</div>
+<div class="section"><h3>Examples</h3>
+<ul><li><a href="examples/complete.html">A single example demonstrating the use of all currently available configuration options</a>
+</li>
+<li><a href="examples/profiles.html">Using Maven profiles to provide alternate maven-glassfish-plugin mojo sequences in the default build, and to enable per-user configurations.</a>
+</li>
+</ul>
+</div>
+<div class="section"><h3>Contributors</h3>
+<p>The quality and professionalism of this project are enhanced by the generous contributions of the following vendors of software development tools, who continue to support open-source software through the donation of free licences:</p>
+<ul><li>Atlassian, providers of<ul><li><a href="http://www.atlassian.com/software/jira" class="externalLink">Atlassian JIRA</a>
+ issue tracking system</li>
+<li><a href="http://www.atlassian.com/software/crucible" class="externalLink">Atlassian Crucible</a>
+ team code review system</li>
+<li><a href="http://www.atlassian.com/software/fisheye" class="externalLink">Atlassian FishEye</a>
+ source code repository visualisation system</li>
+</ul>
+</li>
+<li>JetBrains, providers of<ul><li><a href="http://www.jetbrains.com/idea/" class="externalLink">IntelliJ IDEA</a>
+ Java IDE</li>
+<li><a href="http://www.jetbrains.com/teamcity/" class="externalLink">TeamCity</a>
+ continuous integration system</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+      </div>
+    </div>
+    <div class="clear">
+      <hr/>
+    </div>
+    <div id="footer">
+      <div class="xright">&#169;  
+          2007-2008
+    
+          
+  
+
+  
+  
+  &nbsp;| Last Published: 01 Sep 2008
+  &nbsp;| Version: 2.1
+</div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+        <script type="text/javascript">
+          var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+          document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+      </script>
+      <script type="text/javascript">
+          var pageTracker = _gat._getTracker("UA-5898043-1");
+          pageTracker._trackPageview();
+      </script>
+  </body>
+</html>

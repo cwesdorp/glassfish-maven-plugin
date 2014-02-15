@@ -1,0 +1,27 @@
+	  <div id="navcol">
+	    <dl id="projecttools" class="navgroup" style="text-align: left;">
+	      <dt id="current-zone" class="depth0">
+		<a href="http://glassfish.java.net/">GlassFish Community</a>
+	      </dt>
+	      <dd class="depth0 parent parent" id="menubar">
+<!-- main menu bar -->
+<ul id="main-menubar">
+  <li><a href="http://forums.java.net/jive/forum.jspa?forumID=46&start=0">Discussion forums</a>
+  <li><a href="http://java.net/projects/maven-glassfish-plugin/lists">Mailing lists</a>
+  <li><a href="http://java.net/jira/browse/MAVEN_GLASSFISH_PLUGIN">Issue tracker</a>
+  <li><a href="http://java.net/projects/maven-glassfish-plugin/sources/svn/show">Source code</a>
+
+  <li><a href="#">Mojos</a>
+  <ul>
+    <li><a href="http://maven-glassfish-plugin.java.net/run-mojo.html">glassfish:run</a></li>
+  </ul>
+</ul>
+
+
+<script>
+var info = {
+	title: "Maven GlassFish Plugin"
+};
+</script>
+<script src="http://glassfish-theming.java.net/zone-core.js"></script>
+<script src="http://glassfish-theming.java.net/theme.js"></script>

@@ -1,0 +1,350 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+
+
+
+
+
+
+
+
+<html>
+  <head>
+    <title>Maven Glassfish Plugin - glassfish:start-domain</title>
+    <style type="text/css" media="all">
+      @import url("./css/maven-base.css");
+      @import url("./css/maven-theme.css");
+      @import url("./css/site.css");
+    </style>
+    <link rel="stylesheet" href="./css/print.css" type="text/css" media="print" />
+        <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+                </head>
+  <body class="composite">
+    <!-- TODO: move this into JavaScript to patch the skin
+      <div class="xright">      <a href="http://www.apache.org/">Apache</a>
+          |
+          <a href="http://maven.apache.org/">Maven</a>
+          |
+          <a href="http://maven.apache.org/plugins/">Maven Plugins</a>
+      </div>
+    -->
+    <div id="leftColumn">
+      <div id="navcolumn">
+             <dl class=navgroup>
+        <dt>Overview</dt>
+        <dd><ul>
+              
+    <li class="none">
+              <a href="index.html">Introduction</a>
+        </li>
+              
+    <li class="none">
+              <a href="plugin-info.html">Goals</a>
+        </li>
+              
+    <li class="none">
+              <a href="usage.html">Usage</a>
+        </li>
+              
+    <li class="none">
+              <a href="faq.html">FAQ</a>
+        </li>
+          </ul></dd>
+    </dl>
+      <dl class=navgroup>
+        <dt>Examples</dt>
+        <dd><ul>
+              
+    <li class="none">
+              <a href="examples/complete.html">Complete example</a>
+        </li>
+              
+    <li class="none">
+              <a href="examples/profiles.html">Using profiles</a>
+        </li>
+          </ul></dd>
+    </dl>
+      <dl class=navgroup>
+        <dt>Project Documentation</dt>
+        <dd><ul>
+              
+                
+              
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+              
+        <li class="collapsed">
+              <a href="project-info.html">Project Information</a>
+              </li>
+              
+                
+              
+      
+              
+        <li class="collapsed">
+              <a href="project-reports.html">Project Reports</a>
+              </li>
+          </ul></dd>
+    </dl>
+        </div>
+      <script>
+        // replace the java.net project tools with the navigation bar from Maven.
+        // also get rid of "Get Involved" thingie too, while we are at it
+        var pt = document.getElementById("projecttools");
+        var nv = document.getElementById("navcolumn");
+        
+        while(pt.previousSibling!=null)
+          pt.parentNode.removeChild(pt.previousSibling);
+        
+        pt.parentNode.insertBefore(nv,pt);
+        pt.parentNode.removeChild(pt);
+      </script>
+      <script>
+        // kill "description" h3 bar
+        var ld = document.getElementById("longdescription");
+        if(ld!=null) {
+          for( n=ld.firstChild; n!=null; n=n.nextSibling ) {
+            if(n.nodeType==1 && n.innerHTML=="Description" ) {
+              n.parentNode.removeChild(n);
+              break;
+            }
+          }
+        }
+      </script>
+    </div>
+    <div id="bodyColumn">
+      <div id="contentBox">
+        <div class="section"><h2><a name="glassfish:start-domain"></a>
+glassfish:start-domain</h2>
+<p><strong>Full name</strong>:</p>
+<p>org.glassfish.maven.plugin:maven-glassfish-plugin:2.1:start-domain</p>
+<p><strong>Description</strong>:</p>
+<div>Start an existing domain in a local or remote Glassfish instance</div><p><strong>Attributes</strong>:</p>
+<ul><li>Requires a Maven 2.0 project to be executed.</li>
+<li>Binds by default to the lifecycle phase: <code>pre-integration-test</code>.</li>
+</ul>
+<div class="section"><h3><a name="Required_Parameters"></a>
+Required Parameters</h3>
+<table class="bodyTable"><tr class="a"><th>Name</th>
+<th>Type</th>
+<th>Since</th>
+<th>Description</th>
+</tr>
+<tr class="b"><td><strong><a href="#domain">domain</a>
+</strong></td>
+<td><code>Domain</code></td>
+<td><code>-</code></td>
+<td>Container for domain configuration parameters.<br />
+</td>
+</tr>
+<tr class="a"><td><strong><a href="#glassfishDirectory">glassfishDirectory</a>
+</strong></td>
+<td><code>File</code></td>
+<td><code>-</code></td>
+<td>The root directory of the Glassfish installation to be used<br />
+</td>
+</tr>
+</table>
+</div>
+<div class="section"><h3><a name="Optional_Parameters"></a>
+Optional Parameters</h3>
+<table class="bodyTable"><tr class="b"><th>Name</th>
+<th>Type</th>
+<th>Since</th>
+<th>Description</th>
+</tr>
+<tr class="a"><td><strong><a href="#domainDirectory">domainDirectory</a>
+</strong></td>
+<td><code>File</code></td>
+<td><code>-</code></td>
+<td>The directory into which domains are deployed. Default value is
+${glassfishDirectory}/domains.<br />
+</td>
+</tr>
+<tr class="b"><td><strong><a href="#debug">debug</a>
+</strong></td>
+<td><code>boolean</code></td>
+<td><code>-</code></td>
+<td>Debug Glassfish output<br />
+<strong>Default value is</strong>: <code>false</code>.</td>
+</tr>
+<tr class="a"><td><strong><a href="#echo">echo</a>
+</strong></td>
+<td><code>boolean</code></td>
+<td><code>-</code></td>
+<td>Echo Glassfish asadmin commands<br />
+<strong>Default value is</strong>: <code>false</code>.</td>
+</tr>
+<tr class="b"><td><strong><a href="#terse">terse</a>
+</strong></td>
+<td><code>boolean</code></td>
+<td><code>-</code></td>
+<td>Terse Glassfish output<br />
+<strong>Default value is</strong>: <code>true</code>.</td>
+</tr>
+<tr class="a"><td><strong><a href="#skip">skip</a>
+</strong></td>
+<td><code>boolean</code></td>
+<td><code>-</code></td>
+<td>Skip execution<br />
+<strong>Default value is</strong>: <code>false</code>.</td>
+</tr>
+<tr class="b"><td><strong><a href="#autoCreate">autoCreate</a>
+</strong></td>
+<td><code>boolean</code></td>
+<td><code>-</code></td>
+<td>Automatically create the domain if it does not already exist<br />
+<strong>Default value is</strong>: <code>true</code>.</td>
+</tr>
+<tr class="a"><td><strong><a href="#user">user</a>
+</strong></td>
+<td><code>String</code></td>
+<td><code>-</code></td>
+<td>The asadmin user to create for domain administration.<br />
+<strong>Default value is</strong>: <code>${user.name}</code>.</td>
+</tr>
+<tr class="b"><td><strong><a href="#passwordFile">passwordFile</a>
+</strong></td>
+<td><code>String</code></td>
+<td><code>-</code></td>
+<td>Location of the asadmin style password file (if you do not want to
+provide the password in your POM)<br />
+</td>
+</tr>
+<tr class="a"><td><strong><a href="#adminPassword">adminPassword</a>
+</strong></td>
+<td><code>String</code></td>
+<td><code>-</code></td>
+<td>The admin password to use for this domain (if you would rather not
+use an asadmin style password file)<br />
+</td>
+</tr>
+</table>
+</div>
+<div class="section"><h3><a name="Parameter_Details"></a>
+Parameter Details</h3>
+<p><strong><a name="domainDirectory">domainDirectory</a>
+:</strong></p>
+<div>The directory into which domains are deployed. Default value is
+${glassfishDirectory}/domains.</div><ul><li><strong>Type</strong>: <code>java.io.File</code></li>
+<li><strong>Required</strong>: <code>No</code></li>
+</ul>
+<hr />
+<p><strong><a name="domain">domain</a>
+:</strong></p>
+<div>Container for domain configuration parameters.</div><ul><li><strong>Type</strong>: <code>org.glassfish.maven.plugin.Domain</code></li>
+<li><strong>Required</strong>: <code>Yes</code></li>
+</ul>
+<hr />
+<p><strong><a name="glassfishDirectory">glassfishDirectory</a>
+:</strong></p>
+<div>The root directory of the Glassfish installation to be used</div><ul><li><strong>Type</strong>: <code>java.io.File</code></li>
+<li><strong>Required</strong>: <code>Yes</code></li>
+<li><strong>Expression</strong>: <code>${glassfish.home}</code></li>
+</ul>
+<hr />
+<p><strong><a name="debug">debug</a>
+:</strong></p>
+<div>Debug Glassfish output</div><ul><li><strong>Type</strong>: <code>boolean</code></li>
+<li><strong>Required</strong>: <code>No</code></li>
+<li><strong>Default</strong>: <code>false</code></li>
+</ul>
+<hr />
+<p><strong><a name="echo">echo</a>
+:</strong></p>
+<div>Echo Glassfish asadmin commands</div><ul><li><strong>Type</strong>: <code>boolean</code></li>
+<li><strong>Required</strong>: <code>No</code></li>
+<li><strong>Default</strong>: <code>false</code></li>
+</ul>
+<hr />
+<p><strong><a name="terse">terse</a>
+:</strong></p>
+<div>Terse Glassfish output</div><ul><li><strong>Type</strong>: <code>boolean</code></li>
+<li><strong>Required</strong>: <code>No</code></li>
+<li><strong>Default</strong>: <code>true</code></li>
+</ul>
+<hr />
+<p><strong><a name="skip">skip</a>
+:</strong></p>
+<div>Skip execution</div><ul><li><strong>Type</strong>: <code>boolean</code></li>
+<li><strong>Required</strong>: <code>No</code></li>
+<li><strong>Default</strong>: <code>false</code></li>
+</ul>
+<hr />
+<p><strong><a name="autoCreate">autoCreate</a>
+:</strong></p>
+<div>Automatically create the domain if it does not already exist</div><ul><li><strong>Type</strong>: <code>boolean</code></li>
+<li><strong>Required</strong>: <code>No</code></li>
+<li><strong>Default</strong>: <code>true</code></li>
+</ul>
+<hr />
+<p><strong><a name="user">user</a>
+:</strong></p>
+<div>The asadmin user to create for domain administration.</div><ul><li><strong>Type</strong>: <code>java.lang.String</code></li>
+<li><strong>Required</strong>: <code>No</code></li>
+<li><strong>Expression</strong>: <code>${glassfish.adminUser}</code></li>
+<li><strong>Default</strong>: <code>${user.name}</code></li>
+</ul>
+<hr />
+<p><strong><a name="passwordFile">passwordFile</a>
+:</strong></p>
+<div>Location of the asadmin style password file (if you do not want to
+provide the password in your POM)</div><ul><li><strong>Type</strong>: <code>java.lang.String</code></li>
+<li><strong>Required</strong>: <code>No</code></li>
+</ul>
+<hr />
+<p><strong><a name="adminPassword">adminPassword</a>
+:</strong></p>
+<div>The admin password to use for this domain (if you would rather not
+use an asadmin style password file)</div><ul><li><strong>Type</strong>: <code>java.lang.String</code></li>
+<li><strong>Required</strong>: <code>No</code></li>
+<li><strong>Expression</strong>: <code>${glassfish.adminPassword}</code></li>
+</ul>
+</div>
+</div>
+
+      </div>
+    </div>
+    <div class="clear">
+      <hr/>
+    </div>
+    <div id="footer">
+      <div class="xright">&#169;  
+          2007-2008
+    
+          
+  
+
+  
+  
+  &nbsp;| Last Published: 01 Sep 2008
+  &nbsp;| Version: 2.1
+</div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+        <script type="text/javascript">
+          var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+          document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+      </script>
+      <script type="text/javascript">
+          var pageTracker = _gat._getTracker("UA-5898043-1");
+          pageTracker._trackPageview();
+      </script>
+  </body>
+</html>
