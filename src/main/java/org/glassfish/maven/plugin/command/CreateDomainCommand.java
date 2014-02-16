@@ -36,30 +36,29 @@
 
 package org.glassfish.maven.plugin.command;
 
-import org.glassfish.maven.plugin.Domain;
-import org.glassfish.maven.plugin.GlassfishMojo;
-
 import java.util.List;
+import org.glassfish.maven.plugin.AbstractGlassfishMojo;
+import org.glassfish.maven.plugin.Domain;
 
 /**
- * Created by dwhitla at Apr 9, 2007 4:09:05 PM
  *
  * @author <a href="mailto:dave.whitla@ocean.net.au">Dave Whitla</a>
- * @version $Id: CreateDomainCommand.java 0 Apr 9, 2007 4:09:05 PM dwhitla $
  */
-public class CreateDomainCommand extends InteractiveAsadminCommand {
+public class CreateDomainCommand extends AbstractInteractiveAsadminCommand {
 
     private Domain domain;
 
-    public CreateDomainCommand(GlassfishMojo sharedContext, Domain domain) {
+    public CreateDomainCommand(AbstractGlassfishMojo sharedContext, Domain domain) {
         super(sharedContext);
         this.domain = domain;
     }
 
+    @Override
     protected String getName() {
         return "create-domain";
     }
 
+    @Override
     protected List<String> getParameters() {
         StringBuilder domainProperties = new StringBuilder();
         if (domain.getHTTPSPort() > 0) {
@@ -88,6 +87,7 @@ public class CreateDomainCommand extends InteractiveAsadminCommand {
         return parameters;
     }
 
+    @Override
     protected String getErrorMessage() {
         return "Unable to create domain \"" + domain.getName() + "\".";
     }

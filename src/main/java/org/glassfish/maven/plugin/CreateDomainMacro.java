@@ -58,10 +58,10 @@ import org.glassfish.maven.plugin.command.StopDomainCommand;
  */
 public class CreateDomainMacro {
 
-    private final GlassfishMojo sharedContext;
+    private final AbstractGlassfishMojo sharedContext;
     private final Domain domain;
 
-    public CreateDomainMacro(GlassfishMojo sharedContext, Domain domain) {
+    public CreateDomainMacro(AbstractGlassfishMojo sharedContext, Domain domain) {
         this.sharedContext = sharedContext;
         this.domain = domain;
     }
@@ -110,13 +110,13 @@ public class CreateDomainMacro {
     }
 
     private void createDataSource(ProcessBuilder processBuilder, JdbcDataSource jdbcDataSource)
-            throws MojoExecutionException, MojoFailureException {
+        throws MojoExecutionException, MojoFailureException {
         new CreateJDBCConnectionPoolCommand(sharedContext, domain, jdbcDataSource).execute(processBuilder);
         new CreateJDBCResourceCommand(sharedContext, domain, jdbcDataSource).execute(processBuilder);
     }
 
     private void createJMSDestination(ProcessBuilder processBuilder, JmsDestination jmsDestination)
-            throws MojoExecutionException, MojoFailureException {
+        throws MojoExecutionException, MojoFailureException {
         // TODO - check if JMS CF exists ?
         if (jmsDestination.getConnectionFactory() != null) {
             new CreateJMSResourceCommand(sharedContext, domain, jmsDestination.getConnectionFactory()).execute(processBuilder);
@@ -143,7 +143,7 @@ public class CreateDomainMacro {
     }
 
     private void setMessageSecurityProvider(ProcessBuilder processBuilder, Auth auth)
-            throws MojoExecutionException, MojoFailureException {
+        throws MojoExecutionException, MojoFailureException {
         MessageSecurityProvider securityProvider = auth.getMessageSecurityProvider();
         if (securityProvider != null) {
             new CreateMessageSecurityProviderCommand(sharedContext, domain, securityProvider).execute(processBuilder);

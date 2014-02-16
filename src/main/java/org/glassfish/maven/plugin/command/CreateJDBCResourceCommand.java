@@ -36,25 +36,22 @@
 
 package org.glassfish.maven.plugin.command;
 
-import org.glassfish.maven.plugin.GlassfishMojo;
+import java.util.Arrays;
+import java.util.List;
+import org.glassfish.maven.plugin.AbstractGlassfishMojo;
 import org.glassfish.maven.plugin.Domain;
 import org.glassfish.maven.plugin.JdbcDataSource;
 
-import java.util.List;
-import java.util.Arrays;
-
 /**
- * Created by dwhitla at Apr 10, 2007 2:23:01 PM
  *
  * @author <a href="mailto:dave.whitla@ocean.net.au">Dave Whitla</a>
- * @version $Id: CreateJDBCResourceCommand.java 0 Apr 10, 2007 2:23:01 PM dwhitla $
  */
-public class CreateJDBCResourceCommand extends InteractiveAsadminCommand {
+public class CreateJDBCResourceCommand extends AbstractInteractiveAsadminCommand {
 
     private Domain domain;
     private JdbcDataSource jdbcDataSource;
 
-    public CreateJDBCResourceCommand(GlassfishMojo sharedContext, Domain domain, JdbcDataSource jdbcDataSource) {
+    public CreateJDBCResourceCommand(AbstractGlassfishMojo sharedContext, Domain domain, JdbcDataSource jdbcDataSource) {
         super(sharedContext);
         this.domain = domain;
         this.jdbcDataSource = jdbcDataSource;
@@ -64,6 +61,7 @@ public class CreateJDBCResourceCommand extends InteractiveAsadminCommand {
         return "create-jdbc-resource";
     }
 
+    @Override
     protected List<String> getParameters() {
         List<String> parameters = super.getParameters();
         parameters.addAll(Arrays.asList(

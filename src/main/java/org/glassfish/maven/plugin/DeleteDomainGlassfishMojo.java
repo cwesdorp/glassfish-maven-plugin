@@ -51,7 +51,7 @@ import org.glassfish.maven.plugin.command.StopDomainCommand;
 @Mojo(name = "delete-domain",
         defaultPhase = LifecyclePhase.POST_INTEGRATION_TEST,
         requiresProject = true)
-public class DeleteDomainGlassfishMojo extends GlassfishMojo {
+public class DeleteDomainGlassfishMojo extends AbstractGlassfishMojo {
 
     @Override
     public void execute() throws MojoExecutionException, MojoFailureException {

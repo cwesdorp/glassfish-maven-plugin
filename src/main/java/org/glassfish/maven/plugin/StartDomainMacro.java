@@ -36,23 +36,21 @@
 
 package org.glassfish.maven.plugin;
 
-import org.glassfish.maven.plugin.command.StartDomainCommand;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.plugin.logging.Log;
+import org.glassfish.maven.plugin.command.StartDomainCommand;
 
 /**
- * Created by Dave Whitla on 24/03/2008 at 00:43:11
  *
  * @author <a href="mailto:dave.whitla@ocean.net.au">Dave Whitla</a>
- * @version $Id: StartDomainMacro.java 0 24/03/2008 00:43:11 dwhitla $
  */
 public class StartDomainMacro {
-    
-    private GlassfishMojo sharedContext;
+
+    private AbstractGlassfishMojo sharedContext;
     private Domain domain;
 
-    public StartDomainMacro(GlassfishMojo sharedContext, Domain domain) {
+    public StartDomainMacro(AbstractGlassfishMojo sharedContext, Domain domain) {
         this.sharedContext = sharedContext;
         this.domain = domain;
     }

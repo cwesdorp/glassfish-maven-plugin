@@ -37,17 +37,17 @@
 package org.glassfish.maven.plugin;
 
 /**
- * Created by dwhitla at Apr 10, 2007 10:35:14 AM
  *
  * @author <a href="mailto:dave.whitla@ocean.net.au">Dave Whitla</a>
- * @version $Id: JMSTopic.java 0 Apr 10, 2007 10:35:14 AM dwhitla $
  */
 public class JmsTopic extends JmsDestination {
 
+    @Override
     public Type getType() {
         return Type.topic;
     }
 
+    @Override
     public void setConnectionFactory(ConnectionFactory connectionFactory) {
         connectionFactory.setType(Type.topicConnectionFactory);
         super.setConnectionFactory(connectionFactory);

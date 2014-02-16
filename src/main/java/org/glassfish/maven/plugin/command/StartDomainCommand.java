@@ -36,23 +36,20 @@
 
 package org.glassfish.maven.plugin.command;
 
-import org.glassfish.maven.plugin.Domain;
-import org.glassfish.maven.plugin.GlassfishMojo;
-
 import java.util.List;
+import org.glassfish.maven.plugin.AbstractGlassfishMojo;
+import org.glassfish.maven.plugin.Domain;
 
 /**
- * Created by dwhitla at Apr 9, 2007 4:16:03 PM
  *
  * @author <a href="mailto:dave.whitla@ocean.net.au">Dave Whitla</a>
- * @version $Id: StartDomainCommand.java 0 Apr 9, 2007 4:16:03 PM dwhitla $
  */
-public class StartDomainCommand extends InteractiveAsadminCommand {
+public class StartDomainCommand extends AbstractInteractiveAsadminCommand {
 
     private Domain domain;
     private boolean debug;
 
-    public StartDomainCommand(GlassfishMojo sharedContext, Domain domain) {
+    public StartDomainCommand(AbstractGlassfishMojo sharedContext, Domain domain) {
         super(sharedContext);
         this.domain = domain;
         this.debug = sharedContext.isDebug();
@@ -62,6 +59,7 @@ public class StartDomainCommand extends InteractiveAsadminCommand {
         return "start-domain";
     }
 
+    @Override
     protected List<String> getParameters() {
         List<String> parameters = super.getParameters();
         parameters.add("--debug=" + debug);

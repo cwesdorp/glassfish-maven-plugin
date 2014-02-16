@@ -1,6 +1,6 @@
 <!DOCTYPE suppressions PUBLIC
-        "-//Puppy Crawl//DTD Suppressions 1.0//EN"
-        "http://www.puppycrawl.com/dtds/suppressions_1_0.dtd">
+    "-//Puppy Crawl//DTD Suppressions 1.1//EN"
+    "http://www.puppycrawl.com/dtds/suppressions_1_1.dtd">
 
 <!--
   ~ DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
@@ -50,7 +50,6 @@
     <suppress checks="ClassDataAbstractionCoupling" files="Test.java" />
     <suppress checks="ClassFanOutComplexity" files="Test.java" />
     <suppress checks="FileLengthCheck" files="Test.java" />
-    <suppress checks="PackageHtml" files="test[/\\]" />
     <suppress checks="IllegalTypeCheck" files="test[/\\]" />
     <suppress checks="JavadocMethodCheck" files="test[/\\]" />
     <suppress checks="JavadocMethod" files="test[/\\]" />
@@ -67,5 +66,15 @@
     <suppress files=".*\.java" checks="IllegalImport" />
 
     <suppress files="CreateDomainMacro" checks="ClassDataAbstractionCoupling" />
-    
+
+    <suppress files="CreateDomainMacro" checks="ClassFanOutComplexityCheck" />
+
+    <suppress files="JmsResource" checks="AbstractClassNameCheck" />
+    <suppress files="JmsDestination" checks="AbstractClassNameCheck" />
+    <suppress files="ConnectionFactory" checks="AbstractClassNameCheck" />
+
+    <suppress files="AbstractAsadminCommand" checks="IllegalTypeCheck" />
+    <suppress files="CreateDomainMacro" checks="IllegalTypeCheck" />
+    <suppress files="StartDomainMacro" checks="IllegalTypeCheck" />
+
 </suppressions>

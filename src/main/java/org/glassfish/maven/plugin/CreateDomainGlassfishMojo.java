@@ -54,7 +54,7 @@ import org.glassfish.maven.plugin.command.StopDomainCommand;
         defaultPhase = LifecyclePhase.PRE_INTEGRATION_TEST,
         requiresProject = true
 )
-public class CreateDomainGlassfishMojo extends GlassfishMojo {
+public class CreateDomainGlassfishMojo extends AbstractGlassfishMojo {
 
     @Override
     public void execute() throws MojoExecutionException, MojoFailureException {

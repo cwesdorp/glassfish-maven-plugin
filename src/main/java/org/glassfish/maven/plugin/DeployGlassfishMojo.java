@@ -51,7 +51,7 @@ import org.glassfish.maven.plugin.command.DeployCommand;
 @Mojo(name = "deploy",
         defaultPhase = LifecyclePhase.PRE_INTEGRATION_TEST,
         requiresProject = true)
-public class DeployGlassfishMojo extends DeploymentGlassfishMojo {
+public class DeployGlassfishMojo extends AbstractDeploymentGlassfishMojo {
 
     @Override
     public void execute() throws MojoExecutionException, MojoFailureException {

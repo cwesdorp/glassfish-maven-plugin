@@ -36,31 +36,30 @@
 
 package org.glassfish.maven.plugin.command;
 
-import org.glassfish.maven.plugin.Domain;
-import org.glassfish.maven.plugin.GlassfishMojo;
-
 import java.util.Arrays;
 import java.util.List;
+import org.glassfish.maven.plugin.AbstractGlassfishMojo;
+import org.glassfish.maven.plugin.Domain;
 
 /**
- * Created by dwhitla at Apr 9, 2007 4:26:46 PM
  *
  * @author <a href="mailto:dave.whitla@ocean.net.au">Dave Whitla</a>
- * @version $Id: AddResourcesCommand.java 0 Apr 9, 2007 4:26:46 PM dwhitla $
  */
-public class AddResourcesCommand extends InteractiveAsadminCommand {
+public class AddResourcesCommand extends AbstractInteractiveAsadminCommand {
 
-    private Domain domain;
+    private final Domain domain;
 
-    public AddResourcesCommand(GlassfishMojo sharedContext, Domain domain) {
+    public AddResourcesCommand(AbstractGlassfishMojo sharedContext, Domain domain) {
         super(sharedContext);
         this.domain = domain;
     }
 
+    @Override
     protected String getName() {
         return "add-resources";
     }
 
+    @Override
     protected List<String> getParameters() {
         if (domain.getResourceDescriptor() == null) {
             return null;
@@ -74,6 +73,7 @@ public class AddResourcesCommand extends InteractiveAsadminCommand {
         return parameters;
     }
 
+    @Override
     protected String getErrorMessage() {
         return "Unable to add resources for domain \"" + domain.getName() + "\".";
     }

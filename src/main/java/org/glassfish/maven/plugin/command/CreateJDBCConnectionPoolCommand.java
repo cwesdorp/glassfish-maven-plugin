@@ -36,24 +36,22 @@
 
 package org.glassfish.maven.plugin.command;
 
-import org.glassfish.maven.plugin.Domain;
-import org.glassfish.maven.plugin.GlassfishMojo;
-import org.glassfish.maven.plugin.JdbcDataSource;
-
 import java.util.Arrays;
 import java.util.List;
+import org.glassfish.maven.plugin.AbstractGlassfishMojo;
+import org.glassfish.maven.plugin.Domain;
+import org.glassfish.maven.plugin.JdbcDataSource;
 
 /**
- * Created by dwhitla at Apr 10, 2007 1:21:52 PM
  *
  * @author <a href="mailto:dave.whitla@ocean.net.au">Dave Whitla</a>
- * @version $Id: CreateJDBCConnectionPoolCommand.java 0 Apr 10, 2007 1:21:52 PM dwhitla $
  */
-public class CreateJDBCConnectionPoolCommand extends InteractiveAsadminCommand {
+public class CreateJDBCConnectionPoolCommand extends AbstractInteractiveAsadminCommand {
+
     private Domain domain;
     private JdbcDataSource jdbcDataSource;
 
-    public CreateJDBCConnectionPoolCommand(GlassfishMojo sharedContext, Domain domain, JdbcDataSource jdbcDataSource) {
+    public CreateJDBCConnectionPoolCommand(AbstractGlassfishMojo sharedContext, Domain domain, JdbcDataSource jdbcDataSource) {
         super(sharedContext);
         this.domain = domain;
         this.jdbcDataSource = jdbcDataSource;

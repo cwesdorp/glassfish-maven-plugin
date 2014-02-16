@@ -36,22 +36,20 @@
 
 package org.glassfish.maven.plugin.command;
 
-import org.glassfish.maven.plugin.GlassfishMojo;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import org.glassfish.maven.plugin.AbstractGlassfishMojo;
 
 /**
- * Created by dwhitla at Apr 9, 2007 7:03:10 PM
  *
  * @author <a href="mailto:dave.whitla@ocean.net.au">Dave Whitla</a>
- * @version $Id: ListDomainsCommand.java 0 Apr 9, 2007 7:03:10 PM dwhitla $
  */
-public class ListDomainsCommand extends AsadminCommand {
+public class ListDomainsCommand extends AbstractAsadminCommand {
+
     private File domainDirectory;
 
-    public ListDomainsCommand(GlassfishMojo sharedContext) {
+    public ListDomainsCommand(AbstractGlassfishMojo sharedContext) {
         super(sharedContext);
         this.domainDirectory = sharedContext.getDomainDirectory();
     }
@@ -69,5 +67,5 @@ public class ListDomainsCommand extends AsadminCommand {
     protected String getErrorMessage() {
         return "Unable to list domains in directory \"" + domainDirectory.getAbsolutePath() + "\".";
     }
-    
+
 }

@@ -36,25 +36,22 @@
 
 package org.glassfish.maven.plugin.command;
 
-import org.glassfish.maven.plugin.Domain;
-import org.glassfish.maven.plugin.GlassfishMojo;
-import org.glassfish.maven.plugin.MessageSecurityProvider;
-
 import java.util.Arrays;
 import java.util.List;
+import org.glassfish.maven.plugin.AbstractGlassfishMojo;
+import org.glassfish.maven.plugin.Domain;
+import org.glassfish.maven.plugin.MessageSecurityProvider;
 
 /**
- * Created by dwhitla at Apr 10, 2007 12:09:39 AM
  *
  * @author <a href="mailto:dave.whitla@ocean.net.au">Dave Whitla</a>
- * @version $Id: CreateMessageSecurityProviderCommand.java 0 Apr 10, 2007 12:09:39 AM dwhitla $
  */
-public class CreateMessageSecurityProviderCommand extends InteractiveAsadminCommand {
-    
+public class CreateMessageSecurityProviderCommand extends AbstractInteractiveAsadminCommand {
+
     private Domain domain;
     private MessageSecurityProvider provider;
 
-    public CreateMessageSecurityProviderCommand(GlassfishMojo sharedContext, Domain domain, MessageSecurityProvider provider) {
+    public CreateMessageSecurityProviderCommand(AbstractGlassfishMojo sharedContext, Domain domain, MessageSecurityProvider provider) {
         super(sharedContext);
         this.domain = domain;
         this.provider = provider;
@@ -64,6 +61,7 @@ public class CreateMessageSecurityProviderCommand extends InteractiveAsadminComm
         return "create-message-security-provider";
     }
 
+    @Override
     protected List<String> getParameters() {
         List<String> parameters = super.getParameters();
         parameters.addAll(Arrays.asList(

@@ -36,38 +36,38 @@
 
 package org.glassfish.maven.plugin.command;
 
-import org.glassfish.maven.plugin.Domain;
-import org.glassfish.maven.plugin.GlassfishMojo;
-import org.glassfish.maven.plugin.Property;
-
 import java.util.Arrays;
 import java.util.List;
+import org.glassfish.maven.plugin.AbstractGlassfishMojo;
+import org.glassfish.maven.plugin.Domain;
+import org.glassfish.maven.plugin.Property;
 
 /**
- * Created by dwhitla at Apr 9, 2007 4:04:41 PM
  *
  * @author <a href="mailto:dave.whitla@ocean.net.au">Dave Whitla</a>
- * @version $Id: SetCommand.java 0 Apr 9, 2007 4:04:41 PM dwhitla $
  */
-public class SetCommand extends InteractiveAsadminCommand {
+public class SetCommand extends AbstractInteractiveAsadminCommand {
 
     private Domain domain;
     private Property property;
 
-    public SetCommand(GlassfishMojo sharedContext, Domain domain, Property property) {
+    public SetCommand(AbstractGlassfishMojo sharedContext, Domain domain, Property property) {
         super(sharedContext);
         this.domain = domain;
         this.property = property;
     }
 
+    @Override
     protected String getErrorMessage() {
         return "Unable to set domain property \"" + property + "\".";
     }
 
+    @Override
     protected String getName() {
         return "set";
     }
 
+    @Override
     protected List<String> getParameters() {
         List<String> parameters = super.getParameters();
         parameters.addAll(Arrays.asList(

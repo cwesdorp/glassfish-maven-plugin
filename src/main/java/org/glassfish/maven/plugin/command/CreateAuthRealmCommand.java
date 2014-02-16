@@ -36,25 +36,22 @@
 
 package org.glassfish.maven.plugin.command;
 
-import org.glassfish.maven.plugin.Domain;
-import org.glassfish.maven.plugin.GlassfishMojo;
-import org.glassfish.maven.plugin.Realm;
-
 import java.util.Arrays;
 import java.util.List;
+import org.glassfish.maven.plugin.AbstractGlassfishMojo;
+import org.glassfish.maven.plugin.Domain;
+import org.glassfish.maven.plugin.Realm;
 
 /**
- * Created by dwhitla at Apr 9, 2007 4:29:14 PM
  *
  * @author <a href="mailto:dave.whitla@ocean.net.au">Dave Whitla</a>
- * @version $Id: CreateAuthRealmCommand.java 0 Apr 9, 2007 4:29:14 PM dwhitla $
  */
-public class CreateAuthRealmCommand extends InteractiveAsadminCommand {
+public class CreateAuthRealmCommand extends AbstractInteractiveAsadminCommand {
 
     private Domain domain;
     private Realm realm;
 
-    public CreateAuthRealmCommand(GlassfishMojo sharedContext, Domain domain, Realm realm) {
+    public CreateAuthRealmCommand(AbstractGlassfishMojo sharedContext, Domain domain, Realm realm) {
         super(sharedContext);
         this.domain = domain;
         this.realm = realm;
@@ -64,6 +61,7 @@ public class CreateAuthRealmCommand extends InteractiveAsadminCommand {
         return "create-auth-realm";
     }
 
+    @Override
     protected List<String> getParameters() {
         List<String> parameters = super.getParameters();
         parameters.addAll(Arrays.asList(

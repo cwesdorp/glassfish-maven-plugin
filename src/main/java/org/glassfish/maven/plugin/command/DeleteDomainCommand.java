@@ -36,23 +36,20 @@
 
 package org.glassfish.maven.plugin.command;
 
-import org.glassfish.maven.plugin.Domain;
-import org.glassfish.maven.plugin.GlassfishMojo;
-
 import java.util.ArrayList;
 import java.util.List;
+import org.glassfish.maven.plugin.AbstractGlassfishMojo;
+import org.glassfish.maven.plugin.Domain;
 
 /**
- * Created by dwhitla at Apr 9, 2007 4:50:59 PM
  *
  * @author <a href="mailto:dave.whitla@ocean.net.au">Dave Whitla</a>
- * @version $Id: DeleteDomainCommand.java 0 Apr 9, 2007 4:50:59 PM dwhitla $
  */
-public class DeleteDomainCommand extends AsadminCommand {
+public class DeleteDomainCommand extends AbstractAsadminCommand {
 
     private Domain domain;
 
-    public DeleteDomainCommand(GlassfishMojo sharedContext, Domain domain) {
+    public DeleteDomainCommand(AbstractGlassfishMojo sharedContext, Domain domain) {
         super(sharedContext);
         this.domain = domain;
     }

@@ -36,31 +36,30 @@
 
 package org.glassfish.maven.plugin.command;
 
-import org.glassfish.maven.plugin.Domain;
-import org.glassfish.maven.plugin.GlassfishMojo;
-
 import java.util.ArrayList;
 import java.util.List;
+import org.glassfish.maven.plugin.AbstractGlassfishMojo;
+import org.glassfish.maven.plugin.Domain;
 
 /**
- * Created by dwhitla at Apr 9, 2007 4:54:49 PM
  *
  * @author <a href="mailto:dave.whitla@ocean.net.au">Dave Whitla</a>
- * @version $Id: StopDomainCommand.java 0 Apr 9, 2007 4:54:49 PM dwhitla $
  */
-public class StopDomainCommand extends AsadminCommand {
-    
+public class StopDomainCommand extends AbstractAsadminCommand {
+
     private Domain domain;
 
-    public StopDomainCommand(GlassfishMojo sharedContext, Domain domain) {
+    public StopDomainCommand(AbstractGlassfishMojo sharedContext, Domain domain) {
         super(sharedContext);
         this.domain = domain;
     }
 
+    @Override
     protected String getName() {
         return "stop-domain";
     }
 
+    @Override
     protected List<String> getParameters() {
         List<String> parameters = new ArrayList<String>();
         addOptionalParameter(parameters, "--domaindir", domain.getDirectory());
@@ -68,6 +67,7 @@ public class StopDomainCommand extends AsadminCommand {
         return parameters;
     }
 
+    @Override
     protected String getErrorMessage() {
         return "Unable to stop domain \"" + domain.getName() + "\".";
     }

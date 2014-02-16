@@ -42,7 +42,6 @@ import org.apache.maven.plugins.annotations.Parameter;
  * Describes a security configuration for a Glassfish domain.
  *
  * @author <a href="mailto:dave.whitla@ocean.net.au">Dave Whitla</a>
- * @author <a href="mailto:chriswesdorp@gmail.com">Chris</a>
  */
 public class Auth {
 

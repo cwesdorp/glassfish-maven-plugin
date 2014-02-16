@@ -37,10 +37,8 @@
 package org.glassfish.maven.plugin;
 
 /**
- * Created by dwhitla at Apr 10, 2007 10:36:56 AM
  *
  * @author <a href="mailto:dave.whitla@ocean.net.au">Dave Whitla</a>
- * @version $Id: Destination.java 0 Apr 10, 2007 10:36:56 AM dwhitla $
  */
 public class Destination {
 

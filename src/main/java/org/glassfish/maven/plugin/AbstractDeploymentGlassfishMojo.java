@@ -34,31 +34,31 @@
  * holder.
  ******************************************************************************/
 
-package org.glassfish.maven.plugin.command;
+package org.glassfish.maven.plugin;
 
-import org.glassfish.maven.plugin.GlassfishMojo;
-
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+import org.apache.maven.plugins.annotations.Parameter;
 
 /**
- * Created by Dave Whitla on 24/03/2008 at 01:40:23
+ * Describe the deployment of artifacts into Glassfish.
  *
  * @author <a href="mailto:dave.whitla@ocean.net.au">Dave Whitla</a>
- * @version $Id: InteractiveAsadminCommand.java 0 24/03/2008 01:40:23 dwhitla $
  */
-public abstract class InteractiveAsadminCommand extends AsadminCommand {
+public abstract class AbstractDeploymentGlassfishMojo extends AbstractGlassfishMojo {
 
-    protected InteractiveAsadminCommand(GlassfishMojo sharedContext) {
-        super(sharedContext);
+    /**
+     * The set of components we are publishing.
+     */
+    @Parameter(required = true)
+    protected List<Component> components;
+
+
+    public List<Component> getComponents() {
+        return components;
     }
 
-    protected List<String> getParameters() {
-        return new ArrayList<String>(Arrays.asList(
-                "--interactive=false",
-                "--user", sharedContext.getUser(),
-                "--passwordfile", sharedContext.getPasswordFile()
-        ));
+    public void setComponents(List<Component> components) {
+        this.components = components;
     }
+
 }

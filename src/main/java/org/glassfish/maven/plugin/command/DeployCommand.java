@@ -36,44 +36,43 @@
 
 package org.glassfish.maven.plugin.command;
 
-import org.glassfish.maven.plugin.DeploymentGlassfishMojo;
-import org.glassfish.maven.plugin.Domain;
-import org.glassfish.maven.plugin.Component;
-
-import java.util.List;
-import java.util.Arrays;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.Arrays;
+import java.util.List;
+import org.glassfish.maven.plugin.AbstractDeploymentGlassfishMojo;
+import org.glassfish.maven.plugin.Component;
+import org.glassfish.maven.plugin.Domain;
 
 /**
- * Created by dwhitla at Apr 9, 2007 4:36:52 PM
  *
  * @author <a href="mailto:dave.whitla@ocean.net.au">Dave Whitla</a>
- * @version $Id: DeployCommand.java 0 Apr 9, 2007 4:36:52 PM dwhitla $
  */
-public class DeployCommand extends InteractiveAsadminCommand {
+public class DeployCommand extends AbstractInteractiveAsadminCommand {
 
     private Domain domain;
     private Component component;
     private boolean force;
 
-    public DeployCommand(DeploymentGlassfishMojo sharedContext, Domain domain, Component component) {
+    public DeployCommand(AbstractDeploymentGlassfishMojo sharedContext, Domain domain, Component component) {
         super(sharedContext);
         this.domain = domain;
         this.component = component;
         this.force = sharedContext.isForce();
     }
 
+    @Override
     protected String getName() {
         return "deploy";
     }
 
+    @Override
     protected List<String> getParameters() {
         boolean upload = true;
         try {
             upload = !InetAddress.getByName(domain.getHost()).isLoopbackAddress();
         } catch (UnknownHostException e) {
-            // ignore
+            throw new IllegalArgumentException("Domain host '" + domain.getHost() + "' is not valid", e);
         }
         List<String> parameters = super.getParameters();
         parameters.addAll(Arrays.asList(
@@ -87,6 +86,7 @@ public class DeployCommand extends InteractiveAsadminCommand {
         return parameters;
     }
 
+    @Override
     protected String getErrorMessage() {
         return "Deployment of " + component.getArtifact().getAbsolutePath() + " failed.";
     }

@@ -33,14 +33,7 @@
  * only if the new code is made subject to such option by the copyright
  * holder.
  ******************************************************************************/
-
 package org.glassfish.maven.plugin.command;
-
-import org.apache.maven.plugin.MojoExecutionException;
-import org.apache.maven.plugin.MojoFailureException;
-import org.apache.maven.plugin.logging.Log;
-import org.glassfish.maven.plugin.GlassfishMojo;
-import org.glassfish.maven.plugin.Property;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -51,22 +44,25 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
+import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.maven.plugin.MojoFailureException;
+import org.apache.maven.plugin.logging.Log;
+import org.glassfish.maven.plugin.AbstractGlassfishMojo;
+import org.glassfish.maven.plugin.Property;
 
 /**
- * Created by dwhitla at Apr 9, 2007 3:39:26 PM
  *
  * @author <a href="mailto:dave.whitla@ocean.net.au">Dave Whitla</a>
- * @version $Id: Command.java 0 Apr 9, 2007 3:39:26 PM dwhitla $
  */
-public abstract class AsadminCommand {
+public abstract class AbstractAsadminCommand {
 
     private static final int PROCESS_LOOP_SLEEP_MILLIS = 100;
     private static final int EXIT_SUCCESS = 0;
-    protected GlassfishMojo sharedContext;
+    protected AbstractGlassfishMojo sharedContext;
     private InputStream processOut;
     private InputStream processErr;
 
-    protected AsadminCommand(GlassfishMojo sharedContext) {
+    protected AbstractAsadminCommand(AbstractGlassfishMojo sharedContext) {
         this.sharedContext = sharedContext;
     }
 

@@ -43,13 +43,13 @@ import org.glassfish.maven.plugin.command.DeployCommand;
 import org.glassfish.maven.plugin.command.UndeployCommand;
 
 /**
- * "Hot" redeploy JavaEE components to a domain in a local or remote Glassfish instance
+ * "Hot" redeploy JavaEE components to a domain in a local or remote Glassfish instance.
  *
  * @author <a href="mailto:dave.whitla@ocean.net.au">Dave Whitla</a>
  */
 @Mojo(name = "redeploy",
         requiresProject = true)
-public class RedeployGlassfishMojo extends DeploymentGlassfishMojo {
+public class RedeployGlassfishMojo extends AbstractDeploymentGlassfishMojo {
 
     @Override
     public void execute() throws MojoExecutionException, MojoFailureException {

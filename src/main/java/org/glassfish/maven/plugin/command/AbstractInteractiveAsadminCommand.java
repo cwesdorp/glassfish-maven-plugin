@@ -36,11 +36,26 @@
 
 package org.glassfish.maven.plugin.command;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import org.glassfish.maven.plugin.AbstractGlassfishMojo;
+
 /**
- * Created by Dave Whitla on 23/03/2008 at 20:54:44
  *
  * @author <a href="mailto:dave.whitla@ocean.net.au">Dave Whitla</a>
- * @version $Id: JMXCommand.java 0 23/03/2008 20:54:44 dwhitla $
  */
-public class JMXCommand {
+public abstract class AbstractInteractiveAsadminCommand extends AbstractAsadminCommand {
+
+    protected AbstractInteractiveAsadminCommand(AbstractGlassfishMojo sharedContext) {
+        super(sharedContext);
+    }
+
+    protected List<String> getParameters() {
+        return new ArrayList<String>(Arrays.asList(
+                "--interactive=false",
+                "--user", sharedContext.getUser(),
+                "--passwordfile", sharedContext.getPasswordFile()
+        ));
+    }
 }

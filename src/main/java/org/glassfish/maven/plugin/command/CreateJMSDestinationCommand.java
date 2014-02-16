@@ -36,25 +36,22 @@
 
 package org.glassfish.maven.plugin.command;
 
+import java.util.Arrays;
+import java.util.List;
+import org.glassfish.maven.plugin.AbstractGlassfishMojo;
 import org.glassfish.maven.plugin.Destination;
 import org.glassfish.maven.plugin.Domain;
-import org.glassfish.maven.plugin.GlassfishMojo;
-
-import java.util.List;
-import java.util.Arrays;
 
 /**
- * Created by dwhitla at Apr 10, 2007 10:10:17 AM
  *
  * @author <a href="mailto:dave.whitla@ocean.net.au">Dave Whitla</a>
- * @version $Id: CreateJMSDestinationCommand.java 0 Apr 10, 2007 10:10:17 AM dwhitla $
  */
-public class CreateJMSDestinationCommand extends InteractiveAsadminCommand {
-    
-    private Domain domain;
-    private Destination destination;
+public class CreateJMSDestinationCommand extends AbstractInteractiveAsadminCommand {
 
-    public CreateJMSDestinationCommand(GlassfishMojo sharedContext, Domain domain, Destination destination) {
+    private final Domain domain;
+    private final Destination destination;
+
+    public CreateJMSDestinationCommand(AbstractGlassfishMojo sharedContext, Domain domain, Destination destination) {
         super(sharedContext);
         this.domain = domain;
         this.destination = destination;

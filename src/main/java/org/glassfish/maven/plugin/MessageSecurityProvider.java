@@ -42,7 +42,7 @@ import org.apache.maven.plugins.annotations.Parameter;
 
 /**
  *
- * @author chris
+ * @author <a href="mailto:dave.whitla@ocean.net.au">Dave Whitla</a>
  */
 public class MessageSecurityProvider {
 
@@ -73,7 +73,7 @@ public class MessageSecurityProvider {
             return label;
         }
 
-        public static RecipientAuthPhase forLabel(String label) throws IllegalArgumentException {
+        public static RecipientAuthPhase forLabel(String label) {
             for (RecipientAuthPhase phase : values()) {
                 if (phase.label.equals(label)) {
                     return phase;

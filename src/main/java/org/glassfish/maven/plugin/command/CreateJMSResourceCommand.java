@@ -38,21 +38,20 @@ package org.glassfish.maven.plugin.command;
 
 import java.util.Arrays;
 import java.util.List;
+import org.glassfish.maven.plugin.AbstractGlassfishMojo;
 import org.glassfish.maven.plugin.Domain;
-import org.glassfish.maven.plugin.GlassfishMojo;
 import org.glassfish.maven.plugin.JmsResource;
 
 /**
- * Created by dwhitla at Apr 10, 2007 10:09:52 AM
  *
  * @author <a href="mailto:dave.whitla@ocean.net.au">Dave Whitla</a>
  */
-public class CreateJMSResourceCommand extends InteractiveAsadminCommand {
+public class CreateJMSResourceCommand extends AbstractInteractiveAsadminCommand {
 
     private Domain domain;
     private JmsResource resource;
 
-    public CreateJMSResourceCommand(GlassfishMojo sharedContext, Domain domain, JmsResource resource) {
+    public CreateJMSResourceCommand(AbstractGlassfishMojo sharedContext, Domain domain, JmsResource resource) {
         super(sharedContext);
         this.domain = domain;
         this.resource = resource;
@@ -62,6 +61,7 @@ public class CreateJMSResourceCommand extends InteractiveAsadminCommand {
         return "create-jms-resource";
     }
 
+    @Override
     protected List<String> getParameters() {
         List<String> parameters = super.getParameters();
         parameters.addAll(Arrays.asList(

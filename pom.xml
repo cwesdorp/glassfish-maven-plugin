@@ -17,11 +17,11 @@
     <licenses>
         <license>
             <name>The Common Development and Distribution Licence version 1.0 (CDDL)</name>
-            <url>https://glassfish.dev.java.net/public/CDDL+GPL.html</url>
+            <url>http://opensource.org/licenses/CDDL-1.0</url>
         </license>
         <license>
             <name>The GNU General Public Licence version 2 (GPLv2) with classpath exception</name>
-            <url>https://glassfish.dev.java.net/public/CDDL+GPL.html</url>
+            <url>http://www.gnu.org/licenses/gpl-2.0.html</url>
         </license>
     </licenses>
 
@@ -73,6 +73,7 @@
         <build.number>${user.name}</build.number>
         <test.unit.skip>true</test.unit.skip>
         <test.int.skip>true</test.int.skip>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
     <build>
@@ -102,7 +103,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>
-                <version>2.2</version>
+                <version>2.11</version>
                 <configuration>
                     <configLocation>${basedir}/build-tools/checkstyle.xml</configLocation>
                     <headerLocation>${basedir}/build-tools/${licence}Licence.txt</headerLocation>
@@ -113,7 +114,7 @@
                     <enableRulesSummary>false</enableRulesSummary>
                     <consoleOutput>true</consoleOutput>
                     <failsOnError>false</failsOnError>
-                    <failOnViolation>true</failOnViolation>
+                    <failOnViolation>false</failOnViolation>
                     <includeTestSourceDirectory>true</includeTestSourceDirectory>
                 </configuration>
                 <executions>
@@ -131,12 +132,13 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.1</version>
                 <configuration>
-                    <source>1.5</source>
-                    <target>1.5</target>
+                    <source>1.6</source>
+                    <target>1.6</target>
                     <compilerArguments>
                         <nowarn />
                         <encoding>utf8</encoding>
                     </compilerArguments>
+                    <encoding>${project.build.sourceEncoding}</encoding>
                 </configuration>
             </plugin>
             <plugin>
@@ -261,6 +263,14 @@
                     <addSchema>false</addSchema>
                     <autoVersionSubmodules>true</autoVersionSubmodules>
                     <resume>false</resume>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>2.4.3</version>
+                <configuration>
+                    <encoding>${project.build.sourceEncoding}</encoding>
                 </configuration>
             </plugin>
         </plugins>

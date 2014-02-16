@@ -36,24 +36,21 @@
 
 package org.glassfish.maven.plugin.command;
 
-import org.glassfish.maven.plugin.Domain;
-import org.glassfish.maven.plugin.GlassfishMojo;
-
-import java.util.List;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Set;
+import org.glassfish.maven.plugin.AbstractGlassfishMojo;
+import org.glassfish.maven.plugin.Domain;
 
 /**
- * Created by dwhitla at Apr 9, 2007 4:22:38 PM
  *
  * @author <a href="mailto:dave.whitla@ocean.net.au">Dave Whitla</a>
- * @version $Id: CreateJVMOptionsCommand.java 0 Apr 9, 2007 4:22:38 PM dwhitla $
  */
-public class CreateJVMOptionsCommand extends InteractiveAsadminCommand {
+public class CreateJVMOptionsCommand extends AbstractInteractiveAsadminCommand {
 
     private Domain domain;
 
-    public CreateJVMOptionsCommand(GlassfishMojo sharedContext, Domain domain) {
+    public CreateJVMOptionsCommand(AbstractGlassfishMojo sharedContext, Domain domain) {
         super(sharedContext);
         this.domain = domain;
     }

@@ -242,14 +242,6 @@ public class JdbcDataSource implements Resource {
         this.maxWait = maxWait;
     }
 
-    public Set<Property> getProperties() {
-        return properties;
-    }
-
-    public void setProperties(Set<Property> properties) {
-        this.properties = properties;
-    }
-
     public String getName() {
         return name;
     }
@@ -258,6 +250,17 @@ public class JdbcDataSource implements Resource {
         this.name = name;
     }
 
+    @Override
+    public Set<Property> getProperties() {
+        return properties;
+    }
+
+    @Override
+    public void setProperties(Set<Property> properties) {
+        this.properties = properties;
+    }
+
+    @Override
     public Type getType() {
         return aType;
     }

@@ -51,7 +51,7 @@ import org.apache.maven.plugins.annotations.Mojo;
     defaultPhase = LifecyclePhase.PRE_INTEGRATION_TEST,
     requiresProject = true
 )
-public class StartDomainGlassfishMojo extends GlassfishMojo {
+public class StartDomainGlassfishMojo extends AbstractGlassfishMojo {
 
     @Override
     public void execute() throws MojoExecutionException, MojoFailureException {

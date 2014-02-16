@@ -36,19 +36,18 @@
 
 package org.glassfish.maven.plugin;
 
-
 /**
- * Created by dwhitla at Apr 10, 2007 10:35:14 AM
  *
  * @author <a href="mailto:dave.whitla@ocean.net.au">Dave Whitla</a>
- * @version $Id: JmsQueue.java 0 Apr 10, 2007 10:35:14 AM dwhitla $
  */
 public class JmsQueue extends JmsDestination {
 
+    @Override
     public Type getType() {
         return Type.queue;
     }
 
+    @Override
     public void setConnectionFactory(ConnectionFactory connectionFactory) {
         connectionFactory.setType(Type.queueConnectionFactory);
         super.setConnectionFactory(connectionFactory);

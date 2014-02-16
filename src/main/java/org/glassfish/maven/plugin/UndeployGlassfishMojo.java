@@ -52,7 +52,7 @@ import org.glassfish.maven.plugin.command.UndeployCommand;
 @Mojo(name = "undeploy",
         defaultPhase = LifecyclePhase.POST_INTEGRATION_TEST,
         requiresProject = true)
-public class UndeployGlassfishMojo extends DeploymentGlassfishMojo {
+public class UndeployGlassfishMojo extends AbstractDeploymentGlassfishMojo {
 
     @Override
     public void execute() throws MojoExecutionException, MojoFailureException {

@@ -42,9 +42,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
-import org.apache.maven.artifact.factory.ArtifactFactory;
-import org.apache.maven.artifact.repository.ArtifactRepository;
-import org.apache.maven.artifact.resolver.ArtifactResolver;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.plugins.annotations.Parameter;
@@ -54,16 +51,7 @@ import org.apache.maven.plugins.annotations.Parameter;
  *
  * @author <a href="mailto:dave.whitla@ocean.net.au">Dave Whitla</a>
  */
-public abstract class GlassfishMojo extends AbstractMojo {
-
-    @org.apache.maven.plugins.annotations.Component
-    protected ArtifactResolver artifactResolver;
-
-    @Parameter(defaultValue = "${localRepository}", readonly = true)
-    protected ArtifactRepository localRepository;
-
-    @Parameter(defaultValue = "${project.remoteArtifactRepositories}")
-    protected java.util.List<ArtifactRepository> remoteRepositories;
+public abstract class AbstractGlassfishMojo extends AbstractMojo {
 
     /**
      * The directory into which domains are deployed. Default value is ${glassfishDirectory}/domains.
@@ -76,9 +64,6 @@ public abstract class GlassfishMojo extends AbstractMojo {
      */
     @Parameter(required = true)
     protected Domain domain;
-
-    @org.apache.maven.plugins.annotations.Component
-    private ArtifactFactory artifactFactory;
 
     /**
      * The root directory of the Glassfish installation to be used.
@@ -255,18 +240,10 @@ public abstract class GlassfishMojo extends AbstractMojo {
         // adminPort or basePort are required
         // passfile or adminPassword are required
         if (adminPassword == null && passwordFile == null) {
-            StringBuilder error = new StringBuilder()
-                    .append("inside the definition for plugin: 'maven-glassfish-plugin' specify the following:\n\n")
-                    .append("<configuration>\n")
-                    .append("  ...\n")
-                    .append("  <passwordFile>VALUE</passwordFile>\n")
-                    .append("  ...\n")
-                    .append("   OR\n")
-                    .append("  ...\n")
-                    .append("  <adminPassword>VALUE</adminPassword>\n")
-                    .append("  ...\n")
-                    .append("</configuration>\n");
-            errors.add(error.toString());
+            String error = "inside the definition for plugin: 'maven-glassfish-plugin' specify the following:\n\n"
+                    + "<configuration>\n  ...\n  <passwordFile>VALUE</passwordFile>\n  ...\n   OR\n  ...\n  "
+                    + "<adminPassword>VALUE</adminPassword>\n  ...\n</configuration>\n";
+            errors.add(error);
         }
         return errors;
     }

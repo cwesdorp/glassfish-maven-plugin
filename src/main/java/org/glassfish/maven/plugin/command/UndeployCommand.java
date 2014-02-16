@@ -36,34 +36,33 @@
 
 package org.glassfish.maven.plugin.command;
 
-import org.glassfish.maven.plugin.DeploymentGlassfishMojo;
-import org.glassfish.maven.plugin.Domain;
-import org.glassfish.maven.plugin.Component;
-
-import java.util.List;
 import java.util.Arrays;
+import java.util.List;
+import org.glassfish.maven.plugin.AbstractDeploymentGlassfishMojo;
+import org.glassfish.maven.plugin.Component;
+import org.glassfish.maven.plugin.Domain;
 
 /**
- * Created by dwhitla at Apr 9, 2007 4:59:38 PM
  *
  * @author <a href="mailto:dave.whitla@ocean.net.au">Dave Whitla</a>
- * @version $Id: UndeployCommand.java 0 Apr 9, 2007 4:59:38 PM dwhitla $
  */
-public class UndeployCommand extends InteractiveAsadminCommand {
+public class UndeployCommand extends AbstractInteractiveAsadminCommand {
 
     private Domain domain;
     private Component component;
 
-    public UndeployCommand(DeploymentGlassfishMojo sharedContext, Domain domain, Component component) {
+    public UndeployCommand(AbstractDeploymentGlassfishMojo sharedContext, Domain domain, Component component) {
         super(sharedContext);
         this.domain = domain;
         this.component = component;
     }
 
+    @Override
     protected String getName() {
         return "undeploy";
     }
 
+    @Override
     protected List<String> getParameters() {
         List<String> parameters = super.getParameters();
         parameters.addAll(Arrays.asList(

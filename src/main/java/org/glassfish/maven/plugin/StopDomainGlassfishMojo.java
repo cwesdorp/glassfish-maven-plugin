@@ -43,7 +43,7 @@ import org.apache.maven.plugins.annotations.Mojo;
 import org.glassfish.maven.plugin.command.StopDomainCommand;
 
 /**
- * Stop a domain which is currently running in a local or remote Glassfish instance
+ * Stop a domain which is currently running in a local or remote Glassfish instance.
  *
  * @author <a href="mailto:dave.whitla@ocean.net.au">Dave Whitla</a>
  */
@@ -52,7 +52,7 @@ import org.glassfish.maven.plugin.command.StopDomainCommand;
         defaultPhase = LifecyclePhase.POST_INTEGRATION_TEST,
         requiresProject = true
 )
-public class StopDomainGlassfishMojo extends GlassfishMojo {
+public class StopDomainGlassfishMojo extends AbstractGlassfishMojo {
 
     @Override
     public void execute() throws MojoExecutionException, MojoFailureException {
