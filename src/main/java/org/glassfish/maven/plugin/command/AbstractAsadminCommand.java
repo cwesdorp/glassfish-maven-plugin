@@ -109,16 +109,13 @@ public abstract class AbstractAsadminCommand {
                 } catch (IllegalThreadStateException e) {
                     Thread.sleep(PROCESS_LOOP_SLEEP_MILLIS);
                 } finally {
-                    while (outReader.ready()) {
-                        log.info(outReader.readLine());
-                    }
+                    doReadOutput(outReader);
                 }
             } while(true);
             if (exitValue != EXIT_SUCCESS) {
                 BufferedReader errorReader = new BufferedReader(new InputStreamReader(processErr));
-                while (errorReader.ready()) {
-                    log.error(errorReader.readLine());
-                }
+                doReadError(errorReader);
+
                 String errorMessage = getErrorMessage();
                 log.error(errorMessage);
                 log.error("For more detail on what might be causing the problem try running maven with the --debug option ");
@@ -129,6 +126,20 @@ public abstract class AbstractAsadminCommand {
             throw new MojoExecutionException(getErrorMessage() + " IOException: " + e.getMessage());
         } catch (InterruptedException e) {
             throw new MojoExecutionException(getErrorMessage() + " Process was interrupted: " + e.getMessage());
+        }
+    }
+
+    protected void doReadOutput(BufferedReader reader) throws IOException {
+        Log log = sharedContext.getLog();
+        while (reader.ready()) {
+            log.info(reader.readLine());
+        }
+    }
+
+    protected void doReadError(BufferedReader reader) throws IOException {
+        Log log = sharedContext.getLog();
+        while (reader.ready()) {
+            log.error(reader.readLine());
         }
     }
 
@@ -152,14 +163,6 @@ public abstract class AbstractAsadminCommand {
     protected abstract List<String> getParameters();
 
     protected abstract String getErrorMessage();
-
-    public InputStream getOut() {
-        return processOut;
-    }
-
-    public InputStream getErr() {
-        return processErr;
-    }
 
     protected void addProperties(List<String> commandLine, Set<Property> objectProperties) {
         if (objectProperties != null && !objectProperties.isEmpty()) {

@@ -36,9 +36,6 @@
 
 package org.glassfish.maven.plugin.command;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Set;
 import org.glassfish.maven.plugin.AbstractGlassfishMojo;
 import org.glassfish.maven.plugin.Domain;
 
@@ -46,40 +43,20 @@ import org.glassfish.maven.plugin.Domain;
  *
  * @author <a href="mailto:dave.whitla@ocean.net.au">Dave Whitla</a>
  */
-public class CreateJVMOptionsCommand extends AbstractInteractiveAsadminCommand {
-
-    private Domain domain;
+public class CreateJVMOptionsCommand extends AbstractJVMOptionsCommand {
 
     public CreateJVMOptionsCommand(AbstractGlassfishMojo sharedContext, Domain domain) {
-        super(sharedContext);
-        this.domain = domain;
+        super(sharedContext, domain, domain.getJVMOptions());
     }
 
+    @Override
     protected String getName() {
         return "create-jvm-options";
     }
 
-    protected List<String> getParameters() {
-        Set<String> jvmOptions = domain.getJVMOptions();
-        if (jvmOptions == null || jvmOptions.isEmpty()) {
-            return null;
-        }
-        StringBuilder options = new StringBuilder();
-        for (String option : jvmOptions) {
-            if (options.length() > 0) {
-                options.append(':');
-            }
-            options.append(escape(option, ";:", "\\\\"));
-        }
-        List<String> parameters = super.getParameters();
-        parameters.addAll(Arrays.asList(
-                "--port", String.valueOf(domain.getAdminPort()),
-                options.insert(0, "\\").toString()
-        ));
-        return parameters;
-    }
-
+    @Override
     protected String getErrorMessage() {
         return "Unable to set JVM options for domain \"" + domain.getName() + "\".";
     }
+
 }

@@ -51,6 +51,7 @@ public abstract class AbstractInteractiveAsadminCommand extends AbstractAsadminC
         super(sharedContext);
     }
 
+    @Override
     protected List<String> getParameters() {
         return new ArrayList<String>(Arrays.asList(
                 "--interactive=false",

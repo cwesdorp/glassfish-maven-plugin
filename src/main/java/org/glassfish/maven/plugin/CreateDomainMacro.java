@@ -36,6 +36,7 @@
 
 package org.glassfish.maven.plugin;
 
+import java.util.HashSet;
 import java.util.Set;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
@@ -48,6 +49,8 @@ import org.glassfish.maven.plugin.command.CreateJMSDestinationCommand;
 import org.glassfish.maven.plugin.command.CreateJMSResourceCommand;
 import org.glassfish.maven.plugin.command.CreateJVMOptionsCommand;
 import org.glassfish.maven.plugin.command.CreateMessageSecurityProviderCommand;
+import org.glassfish.maven.plugin.command.DeleteJVMOptionsCommand;
+import org.glassfish.maven.plugin.command.FindReplacableJVMOptionsCommand;
 import org.glassfish.maven.plugin.command.SetCommand;
 import org.glassfish.maven.plugin.command.StartDomainCommand;
 import org.glassfish.maven.plugin.command.StopDomainCommand;
@@ -79,6 +82,13 @@ public class CreateDomainMacro {
 
     private void createJVMOptions(ProcessBuilder processBuilder) throws MojoExecutionException, MojoFailureException {
         if (domain.getJVMOptions() != null) {
+            Set<String> replaceOptions = new HashSet<String>();
+            new FindReplacableJVMOptionsCommand(sharedContext, domain, replaceOptions).execute(processBuilder);
+
+            if (!replaceOptions.isEmpty()) {
+                new DeleteJVMOptionsCommand(sharedContext, domain, replaceOptions).execute(processBuilder);
+            }
+            
             new CreateJVMOptionsCommand(sharedContext, domain).execute(processBuilder);
         }
     }
