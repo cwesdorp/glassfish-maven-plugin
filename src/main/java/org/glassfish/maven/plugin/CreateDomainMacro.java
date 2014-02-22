@@ -36,10 +36,14 @@
 
 package org.glassfish.maven.plugin;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
+import org.apache.commons.io.FileUtils;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
+import org.apache.maven.plugin.logging.Log;
 import org.glassfish.maven.plugin.command.AddResourcesCommand;
 import org.glassfish.maven.plugin.command.CreateAuthRealmCommand;
 import org.glassfish.maven.plugin.command.CreateDomainCommand;
@@ -54,6 +58,7 @@ import org.glassfish.maven.plugin.command.FindReplacableJVMOptionsCommand;
 import org.glassfish.maven.plugin.command.SetCommand;
 import org.glassfish.maven.plugin.command.StartDomainCommand;
 import org.glassfish.maven.plugin.command.StopDomainCommand;
+import org.sonatype.aether.artifact.Artifact;
 
 /**
  *
@@ -71,6 +76,9 @@ public class CreateDomainMacro {
 
     public void execute(ProcessBuilder processBuilder) throws MojoExecutionException, MojoFailureException {
         new CreateDomainCommand(sharedContext, domain).execute(processBuilder);
+        // copy libraries before the domain is started so they are directly available on the classpath
+        copyLibraries();
+
         new StartDomainCommand(sharedContext, domain).execute(processBuilder);
         createJVMOptions(processBuilder);
         addResources(processBuilder);
@@ -88,7 +96,7 @@ public class CreateDomainMacro {
             if (!replaceOptions.isEmpty()) {
                 new DeleteJVMOptionsCommand(sharedContext, domain, replaceOptions).execute(processBuilder);
             }
-            
+
             new CreateJVMOptionsCommand(sharedContext, domain).execute(processBuilder);
         }
     }
@@ -115,6 +123,26 @@ public class CreateDomainMacro {
                 } else if (resource instanceof JdbcDataSource) {
                     createDataSource(processBuilder, (JdbcDataSource) resource);
                 }
+            }
+        }
+    }
+
+    private void copyLibraries() throws MojoExecutionException, MojoFailureException {
+        Set<org.sonatype.aether.artifact.Artifact> libraries = sharedContext.resolveLibraries();
+        Log log = sharedContext.getLog();
+
+        for (Artifact library : libraries) {
+            File repoLocation = library.getFile();
+
+            File destination = new File(domain.getDirectory() + "/" + domain.getName() + "/lib/ext/" + repoLocation.getName());
+            log.info("Copy library to " + destination.toString());
+
+            try {
+                FileUtils.copyFile(repoLocation, destination);
+            } catch (IOException ex) {
+                log.error(ex.getMessage());
+
+                throw new MojoExecutionException(String.format("Error when performing copy of %s", repoLocation.getName()));
             }
         }
     }

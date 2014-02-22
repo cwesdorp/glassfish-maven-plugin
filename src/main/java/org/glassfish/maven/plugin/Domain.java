@@ -96,6 +96,8 @@ public class Domain {
     @Parameter
     private Set<String> jvmOptions;
 
+    private Set<Library> libraries;
+
     @Parameter
     private Set<Property> properties;
 
@@ -205,6 +207,14 @@ public class Domain {
 
     public void setJvmOptions(Set<String> jvmOptions) {
         this.jvmOptions = jvmOptions;
+    }
+
+    public Set<Library> getLibraries() {
+        return libraries;
+    }
+
+    public void setLibraries(Set<Library> libraries) {
+        this.libraries = libraries;
     }
 
     public Set<Property> getProperties() {

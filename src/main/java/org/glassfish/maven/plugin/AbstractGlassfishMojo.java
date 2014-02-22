@@ -36,15 +36,26 @@
 
 package org.glassfish.maven.plugin;
 
+import com.jcabi.aether.Aether;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.plugins.annotations.Parameter;
+import org.apache.maven.project.MavenProject;
+import org.sonatype.aether.RepositorySystemSession;
+import org.sonatype.aether.artifact.Artifact;
+import org.sonatype.aether.resolution.DependencyResolutionException;
+import org.sonatype.aether.util.artifact.DefaultArtifact;
+import org.sonatype.aether.util.artifact.JavaScopes;
 
 
 /**
@@ -118,6 +129,12 @@ public abstract class AbstractGlassfishMojo extends AbstractMojo {
      */
     @Parameter(defaultValue = "${glassfish.adminPassword}")
     private String adminPassword;
+
+    @Parameter(defaultValue = "${project}", readonly = true)
+    private MavenProject project = null;
+
+    @Parameter(defaultValue = "${repositorySystemSession}", readonly = true)
+    private RepositorySystemSession session;
 
     protected String getPrefix() {
         return "glassfish";
@@ -204,6 +221,8 @@ public abstract class AbstractGlassfishMojo extends AbstractMojo {
     }
 
     protected void postConfig() throws MojoFailureException {
+        resolveLibraries();
+
         List<String> configErrors = getConfigErrors();
         if (!configErrors.isEmpty()) {
             throw new MojoFailureException(configErrors.get(0));
@@ -232,6 +251,36 @@ public abstract class AbstractGlassfishMojo extends AbstractMojo {
         if (domain.getDirectory() == null) {
             domain.setDirectory(domainDirectory);
         }
+
+    }
+
+    protected Set<Artifact> resolveLibraries() throws MojoFailureException {
+        if (domain.getLibraries() == null || domain.getLibraries().isEmpty()) {
+            return Collections.EMPTY_SET;
+        }
+
+        Set<Artifact> resolvedLibs = new HashSet<Artifact>(domain.getLibraries().size());
+
+        File repo = session.getLocalRepository().getBasedir();
+        Aether aether = new Aether(project, repo);
+
+        for (Library lib : domain.getLibraries()) {
+            try {
+                Collection<Artifact> resolved = aether.resolve(
+                        new DefaultArtifact(lib.getGroupId(), lib.getArtifactId(), "", "jar", lib.getVersion()),
+                        JavaScopes.COMPILE);
+
+                if (resolved.isEmpty()) {
+                    throw new MojoFailureException("Not all libraries can be resolved.");
+                }
+
+                resolvedLibs.addAll(resolved);
+            } catch (DependencyResolutionException ex) {
+                throw new MojoFailureException("Failed to resolve " + lib.toString(), ex);
+            }
+        }
+
+        return resolvedLibs;
 
     }
 
