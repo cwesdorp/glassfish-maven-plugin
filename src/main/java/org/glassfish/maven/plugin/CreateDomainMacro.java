@@ -36,14 +36,11 @@
 
 package org.glassfish.maven.plugin;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
-import org.apache.commons.io.FileUtils;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
-import org.apache.maven.plugin.logging.Log;
+import org.glassfish.maven.plugin.command.AddLibraryCommand;
 import org.glassfish.maven.plugin.command.AddResourcesCommand;
 import org.glassfish.maven.plugin.command.CreateAuthRealmCommand;
 import org.glassfish.maven.plugin.command.CreateDomainCommand;
@@ -77,10 +74,10 @@ public class CreateDomainMacro {
 
     public void execute(ProcessBuilder processBuilder) throws MojoExecutionException, MojoFailureException {
         new CreateDomainCommand(sharedContext, domain).execute(processBuilder);
-        // copy libraries before the domain is started so they are directly available on the classpath
-        copyLibraries();
 
         new StartDomainCommand(sharedContext, domain).execute(processBuilder);
+        addLibraries(processBuilder);
+
         createJVMOptions(processBuilder);
         addResources(processBuilder);
         setProperties(processBuilder);
@@ -129,24 +126,13 @@ public class CreateDomainMacro {
         }
     }
 
-    private void copyLibraries() throws MojoExecutionException, MojoFailureException {
+    private void addLibraries(ProcessBuilder builder) throws MojoExecutionException, MojoFailureException {
         Set<org.sonatype.aether.artifact.Artifact> libraries = sharedContext.resolveLibraries();
-        Log log = sharedContext.getLog();
 
         for (Artifact library : libraries) {
-            File repoLocation = library.getFile();
-
-            File destination = new File(domain.getDirectory() + "/" + domain.getName() + "/lib/ext/" + repoLocation.getName());
-            log.info("Copy library to " + destination.toString());
-
-            try {
-                FileUtils.copyFile(repoLocation, destination);
-            } catch (IOException ex) {
-                log.error(ex.getMessage());
-
-                throw new MojoExecutionException(String.format("Error when performing copy of %s", repoLocation.getName()));
-            }
+            new AddLibraryCommand(sharedContext, domain, library.getFile()).execute(builder);
         }
+
     }
 
     private void createDataSource(ProcessBuilder processBuilder, JdbcDataSource jdbcDataSource)
