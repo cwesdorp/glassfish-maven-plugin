@@ -96,13 +96,13 @@ public class Domain {
     @Parameter
     private Set<String> jvmOptions;
 
+    @Parameter
     private Set<Library> libraries;
 
     @Parameter
     private Set<Property> properties;
 
-    /**
-     */
+    @Parameter
     private Auth auth;
 
     @Parameter(defaultValue = "developer")
@@ -113,6 +113,9 @@ public class Domain {
 
     @Parameter
     private Set<Resource> resources;
+
+    @Parameter
+    private JavaMailSession javaMailSession;
 
     /**
      * The admin password to use for this domain.
@@ -255,6 +258,14 @@ public class Domain {
 
     public void setResources(Set<Resource> resources) {
         this.resources = resources;
+    }
+
+    public JavaMailSession getJavaMailSession() {
+        return javaMailSession;
+    }
+
+    public void setJavaMailSession(JavaMailSession javaMailSession) {
+        this.javaMailSession = javaMailSession;
     }
 
     public String getAdminPassword() {

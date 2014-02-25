@@ -52,6 +52,7 @@ import org.glassfish.maven.plugin.command.CreateJDBCResourceCommand;
 import org.glassfish.maven.plugin.command.CreateJMSDestinationCommand;
 import org.glassfish.maven.plugin.command.CreateJMSResourceCommand;
 import org.glassfish.maven.plugin.command.CreateJVMOptionsCommand;
+import org.glassfish.maven.plugin.command.CreateJavaMailResourceCommand;
 import org.glassfish.maven.plugin.command.CreateMessageSecurityProviderCommand;
 import org.glassfish.maven.plugin.command.DeleteJVMOptionsCommand;
 import org.glassfish.maven.plugin.command.FindReplacableJVMOptionsCommand;
@@ -84,6 +85,7 @@ public class CreateDomainMacro {
         addResources(processBuilder);
         setProperties(processBuilder);
         createAuth(processBuilder);
+        createMail(processBuilder);
 
         new StopDomainCommand(sharedContext, domain).execute(processBuilder);
     }
@@ -168,6 +170,13 @@ public class CreateDomainMacro {
         if (auth != null) {
             createAuthRealm(processBuilder, auth);
             setMessageSecurityProvider(processBuilder, auth);
+        }
+    }
+
+    private void createMail(ProcessBuilder processBuilder) throws MojoExecutionException, MojoFailureException {
+        JavaMailSession jms = domain.getJavaMailSession();
+        if (jms != null) {
+            new CreateJavaMailResourceCommand(sharedContext, domain, jms).execute(processBuilder);
         }
     }
 
